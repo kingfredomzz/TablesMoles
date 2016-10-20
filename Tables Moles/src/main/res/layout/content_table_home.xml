@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:scrollbars="vertical"
+            tools:showIn="@layout/app_bar_table_home"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="#2f3d47">
+    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          tools:context="king.echomood.periodictable.HomePage"
+        >
+
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/linearLayout"
+            android:layout_alignLeft="@+id/linearLayout2"
+            android:layout_gravity="left"
+            android:id="@+id/GG"
+            android:layout_alignStart="@+id/linearLayout2"></GridLayout>
+
+
+    </HorizontalScrollView>
+</ScrollView>

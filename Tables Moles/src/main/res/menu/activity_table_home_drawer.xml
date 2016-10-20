@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:icon="@drawable/table_icon"
+            android:title="Table"
+            />
+        <item
+            android:id="@+id/nav_solubilty"
+            android:icon="@drawable/chemistry"
+
+            android:title="Solubility" />
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Camera Mole" />
+
+
+        <item android:id="@+id/molar_mass"
+              android:icon="@drawable/molar_mass"
+              android:title="molar mass" ></item>
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/setting"
+            android:title="Setting" />
+    </group>
+
+    <item android:title=" ">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/share"
+                android:actionProviderClass="android.widget.ShareActionProvider"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/contact"
+                android:title="Me" />
+        </menu>
+    </item>
+
+    <item android:id="@+id/exit_icon"
+          android:icon="@drawable/exit"
+          android:title="Exit" />
+
+</menu>
