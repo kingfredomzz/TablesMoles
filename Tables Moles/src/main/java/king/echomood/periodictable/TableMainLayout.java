@@ -1,8 +1,5 @@
 package king.echomood.periodictable;
 
-/**
- * Created by king on 9/23/16.
- */
 
 
 import android.content.Context;
@@ -22,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import king.echomood.periodictable.data.SampleObject;
+
 
 public class TableMainLayout extends RelativeLayout {
 
@@ -146,16 +144,16 @@ public class TableMainLayout extends RelativeLayout {
                     "P",
                     "I",
                     "I",
-                    "I" ,
-                    "I" ,
-                    "I" ,
-                    "-" ,
-                    "-" ,
-                    "I" ,
-                    "I" ,
-                    "I" ,
-                    "I"  ,
-                    "I" ,
+                    "I",
+                    "I",
+                    "I",
+                    "-",
+                    "-",
+                    "I",
+                    "I",
+                    "I",
+                    "I",
+                    "I",
                     "I",
                     "I",
                     "P"
@@ -164,7 +162,7 @@ public class TableMainLayout extends RelativeLayout {
 
             if (x == 1) {
                  sampleObject = new SampleObject(
-                         columns[x] ,
+                         "bb" ,
                          "M",
                          "S",
                          "S",
@@ -300,7 +298,7 @@ public class TableMainLayout extends RelativeLayout {
         this.scrollViewD = new MyScrollView(this.context);
 
         this.tableA.setBackgroundColor(getResources().getColor(R.color.sul_heaers));
-        this.horizontalScrollViewB.setBackgroundColor(Color.LTGRAY);
+        this.horizontalScrollViewB.setBackgroundColor(getResources().getColor(R.color.sul_background_D));
 
 
     }
@@ -404,7 +402,7 @@ public class TableMainLayout extends RelativeLayout {
             TableRow taleRowForTableD = this.taleRowForTableD(sampleObject);
 
             tableRowForTableC.setBackgroundColor(Color.LTGRAY);
-            taleRowForTableD.setBackgroundColor(Color.LTGRAY);
+            taleRowForTableD.setBackgroundColor(getResources().getColor(R.color.sul_background_D));
 
             this.tableC.addView(tableRowForTableC);
             this.tableD.addView(taleRowForTableD);
@@ -465,35 +463,33 @@ public class TableMainLayout extends RelativeLayout {
             params.setMargins(0, 0, 0, 0);
 
             TextView textViewB = this.bodyTextView(info[x]);
-
-            if (info[x] == "I") {
-                textViewB.setTextColor(Color.RED);
-            } else if (info[x] == "P") {
-                textViewB.setTextColor(getResources().getColor(R.color.yell));
-                textViewB.setBackground(getResources().getDrawable(R.drawable.yellow_borders));
-            } else if (info[x] == "S") {
-                textViewB.setTextColor(getResources().getColor(R.color.gree));
-                textViewB.setBackground(getResources().getDrawable(R.drawable.green_borders));
-            } else if (info[x] == "-") {
-                textViewB.setTextColor(getResources().getColor(R.color.bluws));
-                textViewB.setBackground(getResources().getDrawable(R.drawable.blues_borders));
-            } else {
-                textViewB.setTextColor(Color.GRAY);
-            }
-            textViewB.setBackgroundColor(getResources().getColor(R.color.sul_background_D));
             taleRowForTableD.addView(textViewB,params);
-
         }
-
         return taleRowForTableD;
-
     }
 
     // table cell standard TextView
-    TextView bodyTextView(String label){
+    TextView bodyTextView(String label) {
 
         TextView bodyTextView = new TextView(this.context);
-        bodyTextView.setBackgroundColor(Color.WHITE);
+
+        if (label == "P") {
+            bodyTextView.setTextColor(getResources().getColor(R.color.yell));
+            bodyTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.yellow_borders));
+        } else if (label == "I") {
+            bodyTextView.setTextColor(getResources().getColor(R.color.redo));
+            bodyTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.redo_borders));
+        } else if (label == "S") {
+            bodyTextView.setTextColor(getResources().getColor(R.color.gree));
+            bodyTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.green_borders));
+        } else if (label == "-"){
+            bodyTextView.setTextColor(getResources().getColor(R.color.bluws));
+            bodyTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.blues_borders));
+        }else {
+            bodyTextView.setTextColor(Color.WHITE);
+            bodyTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.white_borders));
+        }
+
         bodyTextView.setText(label);
         bodyTextView.setGravity(Gravity.CENTER);
         bodyTextView.setPadding(5, 5, 5, 5);

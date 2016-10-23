@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -64,9 +65,11 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        x = getIntent().getIntExtra("atom" , 0);
+        x = 0;
+        int x_sub = 0;
+        x_sub = getIntent().getIntExtra("atom" , 0);
 
-        x--;
+        x = x_sub - 1;
 
         text_name = (TextView) findViewById(R.id.name_text) ;
         text_name2  = (TextView) findViewById(R.id.name_text2);

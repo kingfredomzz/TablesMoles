@@ -25,9 +25,10 @@
   <color name="colorAccent">#FF4081</color>
   <color name="sympleColor" >#FFFFFF</color>
 
-  <color name="sul_back">#465864</color>
+  <color name="sul_back">#1C2D39</color>
   <color name="sul_heaers" >#1C2D39</color>
-  <color name="sul_background_D">#2f3d47</color>
+
+  <color name="sul_background_D">#FF14212A</color>
 
   <color name="yell">#EF9329</color>
   <color name="gree">#169F5C</color>

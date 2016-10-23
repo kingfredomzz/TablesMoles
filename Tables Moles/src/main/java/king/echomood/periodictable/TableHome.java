@@ -1,9 +1,14 @@
 package king.echomood.periodictable;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,20 +32,22 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import king.echomood.periodictable.data.Element_Class;
 
+/*
+* This activity is to show periodic table like the original
+* also it has the navigation drawer show where we can navigate
+* when we click to any element, this will take us to the detail activity
+
+ */
+
 public class TableHome extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // declare the variables
     int[] numbers  ; // for atomic number
     String[]  letters , type ; // letters flr sypmols
     Double[] mole = new Double[122]; // to get the molar mass
-    private View rightDrawer;
-    private View leftDrawer;
-    private ActionBarDrawerToggle toggle;
-    private DrawerLayout drawer;
-    private ShareActionProvider mShare;
-    int z =0;
+    int z ;
     int lanth = 57  , actin = 89;  // for two rows in the bottom
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,14 @@ public class TableHome extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        z = 0;
+
+        /* init the variables
+            the way: I make 3 variables global, why?
+             I will init them here when i create the activity, then i
+             connect to the database and fill the arrays
+             after that i can use them to fill the table (Periodic Table)
+        */
         numbers= new int[118];
         letters = new String[118];
         type = new String[118];
@@ -61,12 +76,14 @@ public class TableHome extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
+        navigationView.setItemIconTintList(null); // this line to show colors for items in Navigation drawer
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // connect to the DB and fill the arrays:
+        // numers, letters and type
         Connect_To_DB();
 
         // initial the Grid Layout
@@ -75,155 +92,154 @@ public class TableHome extends AppCompatActivity
         gridLayout.setRowCount(10);
         gridLayout.setColumnCount(18);
 
-        // Fill the Grid Layout
+        int child_in_Grid = gridLayout.getChildCount();
+        // Loop to fill the Grid Layout
         int r = 0 , atom = 0 , i =0 , n1 = 71;
         lanth = 57  ; actin = 89;
-        for ( r = 0 ; r < 10; r ++ ) {
-            for (int c = 0; c < 18 ; c ++) {
+        Log.e("Back " , i + " , " + r + " " );
+        if (child_in_Grid == 0) {
+            for (r = 0; r < 10; r++) {
+                for (int c = 0; c < 18; c++) {
+
+                    if (i > 179) {
+                        i = 0;
+                    } else {
+
+                        // create layout for each elemnts
+                        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+
+                        // layouts will be vertically so we can order widgets and the properties like we wants
+                        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+                        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(200, 250));
+
+                        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) linearLayout.getLayoutParams();
+                        marginLayoutParams.rightMargin = 20;
+                        marginLayoutParams.leftMargin = 20;
 
 
-                // create layout for each elemnts
-                LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-
-                // layouts will be vertically so we can order widgets and the properties like we wants
-                linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(200 ,250));
-
-                ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) linearLayout.getLayoutParams();
-                marginLayoutParams.rightMargin = 20;
-                marginLayoutParams.leftMargin = 20;
+                        // textview for the atomic number, and the sympol
+                        TextView textView = new TextView(getApplicationContext()), textView1 = new TextView(getApplicationContext());
+                        // for mole
+                        TextView moleText = new TextView(getApplicationContext());
 
 
-                // textview for the atomic number, and the sympol
-                TextView textView = new TextView(getApplicationContext()) , textView1 = new TextView(getApplicationContext());
-                // for mole
-                TextView moleText = new TextView(getApplicationContext());
+                        textView.setTextColor(this.getResources().getColor(R.color.sympleColor));
+                        textView1.setTextColor(this.getResources().getColor(R.color.sympleColor));
+                        moleText.setTextColor(this.getResources().getColor(R.color.sympleColor));
+                        textView.setTextSize(8);
+                        textView1.setTextSize(16);
+                        textView.setGravity(Gravity.LEFT);
+                        textView.setMarqueeRepeatLimit(12);
+                        moleText.setGravity(Gravity.CENTER);
+
+                        textView1.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+
+
+                        linearLayout.addView(textView, 150, 40);
+
+                        linearLayout.addView(textView1, 150, 110);
+
+                        GridLayout.Spec row = GridLayout.spec(r);
+                        GridLayout.Spec column = GridLayout.spec(c);
+
+
+                        if (i >= 1 && i <= 16) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i >= 20 && i <= 29) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i >= 38 && i <= 47) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i == 92) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i == 110) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i >= 126 && i <= 145) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i >= 93 && i <= 109) {
+                            try {
+                                textView.setText(numbers[atom + 15] + "");
+                                textView1.setText(letters[atom + 15] + "");
+                            } catch (Exception e) {
+                                Log.e("Errorooor", e.toString());
+                            }
+
+                            atom++;
+                        } else if (i >= 111 && i <= 125) {
+                            try {
+                                textView.setText(numbers[atom + 30] + "");
+                                textView1.setText(letters[atom + 30] + "");
+                            } catch (Exception e) {
+                                Log.e("Errorooor", e.toString());
+                            }
+
+                            atom++;
+                        } else if (i >= 146 && i <= 160) {
+                            try {
+                                textView.setText(numbers[lanth - 1] + "");
+                                textView1.setText(letters[lanth - 1] + "");
+                                lanth++;
+                            } catch (Exception e) {
+                                Log.e("Errorooor", e.toString());
+                            }
+
+                        } else if (i >= 160 && i <= 163) {
+                            textView.setText("");
+                            textView1.setText("");
+                        } else if (i >= 164 && i <= 178) {
+                            try {
+                                textView.setText(numbers[actin - 1] + "");
+                                textView1.setText(letters[actin - 1] + "");
+
+
+                                actin++;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else if (i == 179) {
+                            break;
+                        } else {
+                            try {
+                                textView.setText(numbers[atom] + "");
+                                textView1.setText(letters[atom] + "");
+
+
+                                atom++;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
 
 
 
-                textView.setTextColor(this.getResources().getColor(R.color.sympleColor));
-                textView1.setTextColor(this.getResources().getColor(R.color.sympleColor));
-                moleText.setTextColor(this.getResources().getColor(R.color.sympleColor));
-                textView.setTextSize(8);
-                textView1.setTextSize(16);
-                textView.setGravity(Gravity.LEFT);
-                textView.setMarqueeRepeatLimit(12);
-                moleText.setGravity(Gravity.CENTER);
-
-                textView1.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
-
-
-                linearLayout.addView(textView , 150, 40);
-
-                linearLayout.addView(textView1 , 150,110);
-
-                GridLayout.Spec row = GridLayout.spec(r);
-                GridLayout.Spec column = GridLayout.spec(c);
-
-
-
-                if (i >= 1 && i <= 16) {
-                    textView.setText("");
-                    textView1.setText("");
-                }
-
-                else if (i >= 20 && i <= 29) {
-                    textView.setText("");
-                    textView1.setText("");
-                }
-                else if (i >= 38 && i <= 47) {
-                    textView.setText("");
-                    textView1.setText("");
-                }
-                else if (i == 92) {
-                    textView.setText("");
-                    textView1.setText("");
-                }
-                else if (i == 110) {
-                    textView.setText("");
-                    textView1.setText("");
-                }
-                else if (i >= 126 && i <= 145) {
-                    textView.setText("");
-                    textView1.setText("");
-                }
-                else if ( i >= 93 && i <= 109){
-                    try {
-                        textView.setText(numbers[atom + 15] + "");
-                        textView1.setText(letters[atom + 15] + "");
-                    }catch (Exception e) {
-                        Log.e("Errorooor" , e.toString());
+                        try {
+                            gridLayout.addView(linearLayout, new GridLayout.LayoutParams(row, column));
+                        } catch (Exception e) {
+                            Log.e("My Bd", e.toString());
+                        }
+                        i++;
                     }
-
-                    atom ++;
                 }
-                else if (i >= 111 && i <= 125) {
-                    try {
-                        textView.setText(numbers[atom + 30] + "");
-                        textView1.setText(letters[atom + 30] + "");
-                    }catch (Exception e) {
-                        Log.e("Errorooor" , e.toString());
-                    }
-
-                    atom ++;
-                }
-                else if (i >= 146 && i <= 160) {
-                    try {
-                        textView.setText(numbers[lanth -1] + "");
-                        textView1.setText(letters[lanth - 1] + "");
-                        lanth++;
-                    }catch (Exception e) {
-                        Log.e("Errorooor" , e.toString());
-                    }
-
-                }
-
-                else if (i >= 160 && i <= 163) {
-                    textView.setText("");
-                    textView1.setText("");
-                }else if (i >= 164 && i <= 178) {
-                    try {
-                        textView.setText(numbers[actin -1] + "");
-                        textView1.setText(letters[actin - 1] + "");
-
-
-
-                        actin++;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                else if (i == 179 ) {
-                    break;
-                } else {
-                    try {
-                        textView.setText(numbers[atom] + "");
-                        textView1.setText(letters[atom] + "");
-
-
-
-                        atom++;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                try {
-                    gridLayout.addView(linearLayout, new GridLayout.LayoutParams(row, column));
-                }catch (Exception e) {
-                    Log.e("My Bd", e.toString());
-                }
-
-                i ++;
             }
         }
 
+        Log.e("z = " , z +" ");
+        Log.e("i = " , i + " ");
 
-        // to click a chiled layout and take you to it's details
+        Toast.makeText(getApplicationContext(), "Back " , Toast.LENGTH_SHORT).show();
+
+        // to click a child layout and take you to it's details
         int chiled = gridLayout.getChildCount();
+        Log.e("number in grid = " , chiled + "");
+        Log.e("i = " , i + " ");
         for (; z < chiled; z ++){
+
             int ch = 0;
             if (z == 0) ch = 1;
             else if (z >=17 && z <= 19) ch = z - 15;
@@ -235,25 +251,41 @@ public class TableHome extends AppCompatActivity
             else if (z >= 164 && z <= 177) ch = z - 75;
             else ch = z;
             final int chose = ch;
-            final int zz = z;
 
             LinearLayout c = (LinearLayout) gridLayout.getChildAt(z);
 
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    z = 0;
-                    Toast.makeText(getApplicationContext(), zz + "" , Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(TableHome.this, DetailActivity.class);
-                    intent.putExtra("atom" ,5);
-                    startActivity(intent);
+                    Log.e("z = " , z + "");
+                    Log.e("choose = " , chose + " ");
+                    gos(chose);
+
                 }
             });
         }
 
     }
 
-    // function to get data
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(getApplicationContext(), "Stoped" , Toast.LENGTH_SHORT).show();
+        z = 0;
+        Log.e("dd" , "In paused");
+        Log.e("dd" , z + " = z" );
+    }
+
+    void gos (int chos) {
+        z = 0;
+
+        Log.e("when clicking z = " , z + " ");
+        Intent intent = new Intent(TableHome.this, DetailActivity.class);
+        intent.putExtra("atom" ,chos);
+        startActivity(intent);
+    }
+
+    // function to get data from DB and fill the arrays with them
     public void Connect_To_DB(){
 
 
@@ -276,9 +308,11 @@ public class TableHome extends AppCompatActivity
                             continue;
                         }
                         type[x] = results.get(x).getType();
-                        numbers[x] = x +1;
+                        numbers[x] = results.get(x).getId();
+                        Log.e("id = " , numbers[x] + "");
+                        Log.e("types = " , type[x] + "");
                         letters[x] = results.get(x).getSympol();
-                        mole[x] = results.get(x).getAtomic_mass() ;
+                        mole[x] = results.get(x).getAtomic_mass();
                     }
 
                 }
@@ -331,14 +365,21 @@ public class TableHome extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-         if (id == R.id.nav_solubilty) {
+        if (id == R.id.nav_solubilty) {
             startActivity(new Intent(TableHome.this, Sulobility.class));
         } else if (id == R.id.nav_camera){
+
+
              startActivity(new Intent(TableHome.this, CaptureActivity.class));
-         }
+        } else if (id == R.id.molar_mass) {
+             startActivity(new Intent(TableHome.this, MolarCalculater.class));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
+

@@ -163,7 +163,7 @@ public class First extends AppCompatActivity {
                 try {
                     for (int i = 0; i < name.length; i++) {
                         Element_Class elemnt = realm.createObject(Element_Class.class);
-                        elemnt.setId(id[i]);
+                        elemnt.setId(id[i + 1]);
 
                         elemnt.setName(name[i]);
                         elemnt.setSympol(sympol[i]);
