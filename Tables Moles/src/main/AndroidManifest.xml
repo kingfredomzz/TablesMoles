@@ -74,9 +74,16 @@
             android:name=".TableHome"
             android:label="@string/title_activity_table_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".DetailActivity"></activity>
-        <activity android:name=".Sulobility"></activity>
-        <activity android:name=".MolarCalculater"></activity>
+
+        <activity android:name=".DetailActivity"
+            android:parentActivityName=".TableHome">
+
+        </activity>
+        <activity android:name=".Sulobility"
+                  android:parentActivityName=".TableHome"
+            ></activity>
+        <activity android:name=".MolarCalculater"
+                  android:parentActivityName=".TableHome"></activity>
     </application>
 
 </manifest>

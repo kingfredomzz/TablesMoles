@@ -17,10 +17,8 @@
         <king.echomood.periodictable.TableMainLayout
             android:layout_width="wrap_content"
             android:id="@+id/custem_table"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_height="match_parent"
+>
 
         </king.echomood.periodictable.TableMainLayout>
     </ScrollView>
@@ -38,34 +36,133 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
+            android:padding="10dp"
             android:layout_height="wrap_content">
-            <Button
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_weight="0.5"
 
-            <Button
+                >
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="S"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/gree"
+                    android:background="@drawable/green_borders2"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical|center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="SOLUBLE"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/white"
+                    />
+                </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="25dp"
+                android:layout_weight="0.5">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="I"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/redo"
+                    android:background="@drawable/redo_borders2"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical|center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="INSOLUBLE"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/white"
+                    />
+            </LinearLayout>
+
+
 
         </LinearLayout>
+
+
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            >
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_weight="0.5">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="P"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/yell"
+                    android:background="@drawable/yellow_borders2"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical|center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="POORLY Soluble"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/white"
+                    />
+
+                </LinearLayout>
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="-"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/bluws"
+                    android:background="@drawable/blues_borders2"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical|center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="DESCOMPOSITION"
+                    android:textSize="13dp"
+                    android:textColor="@android:color/white"
+                    />
+                </LinearLayout>
 
         </LinearLayout>
+
+
     </LinearLayout>
 
 

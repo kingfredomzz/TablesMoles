@@ -3,6 +3,7 @@ package king.echomood.periodictable;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -164,7 +165,7 @@ public class TableHome extends AppCompatActivity
                             textView1.setText("");
                         } else if (i >= 93 && i <= 109) {
                             try {
-                                textView.setText(numbers[atom + 15] + "");
+                                textView.setText((atom + 16) + "");
                                 textView1.setText(letters[atom + 15] + "");
                             } catch (Exception e) {
                                 Log.e("Errorooor", e.toString());
@@ -173,7 +174,7 @@ public class TableHome extends AppCompatActivity
                             atom++;
                         } else if (i >= 111 && i <= 125) {
                             try {
-                                textView.setText(numbers[atom + 30] + "");
+                                textView.setText((atom + 31) + "");
                                 textView1.setText(letters[atom + 30] + "");
                             } catch (Exception e) {
                                 Log.e("Errorooor", e.toString());
@@ -182,7 +183,7 @@ public class TableHome extends AppCompatActivity
                             atom++;
                         } else if (i >= 146 && i <= 160) {
                             try {
-                                textView.setText(numbers[lanth - 1] + "");
+                                textView.setText((lanth ) + "");
                                 textView1.setText(letters[lanth - 1] + "");
                                 lanth++;
                             } catch (Exception e) {
@@ -194,7 +195,7 @@ public class TableHome extends AppCompatActivity
                             textView1.setText("");
                         } else if (i >= 164 && i <= 178) {
                             try {
-                                textView.setText(numbers[actin - 1] + "");
+                                textView.setText((actin) + "");
                                 textView1.setText(letters[actin - 1] + "");
 
 
@@ -206,7 +207,7 @@ public class TableHome extends AppCompatActivity
                             break;
                         } else {
                             try {
-                                textView.setText(numbers[atom] + "");
+                                textView.setText(atom+ "");
                                 textView1.setText(letters[atom] + "");
 
 
@@ -229,10 +230,8 @@ public class TableHome extends AppCompatActivity
             }
         }
 
-        Log.e("z = " , z +" ");
-        Log.e("i = " , i + " ");
 
-        Toast.makeText(getApplicationContext(), "Back " , Toast.LENGTH_SHORT).show();
+
 
         // to click a child layout and take you to it's details
         int chiled = gridLayout.getChildCount();
@@ -263,6 +262,7 @@ public class TableHome extends AppCompatActivity
 
                 }
             });
+            
         }
 
     }
@@ -270,7 +270,7 @@ public class TableHome extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(getApplicationContext(), "Stoped" , Toast.LENGTH_SHORT).show();
+
         z = 0;
         Log.e("dd" , "In paused");
         Log.e("dd" , z + " = z" );
@@ -373,6 +373,17 @@ public class TableHome extends AppCompatActivity
              startActivity(new Intent(TableHome.this, CaptureActivity.class));
         } else if (id == R.id.molar_mass) {
              startActivity(new Intent(TableHome.this, MolarCalculater.class));
+        } else if (id == R.id.nav_share) {
+             Uri imageUri;
+             Intent intent;
+
+            imageUri = Uri.parse("android.resource://" + getPackageName()+ "/drawable/" + "icon");
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, "#periodicTable");
+            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            intent.setType("image/*");
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

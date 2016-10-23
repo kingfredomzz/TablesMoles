@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="60dp"
             android:layout_marginLeft="60dp"
-            android:id="@+id/camera_Btn"
+            android:id="@+id/Calculate_BTN"
             android:layout_weight="1" />
     </LinearLayout>
 

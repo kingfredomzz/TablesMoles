@@ -1,5 +1,6 @@
 package king.echomood.periodictable;
 
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -97,6 +98,7 @@ public class DetailActivity extends AppCompatActivity {
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(realmConfiguration);
+
 
         getImage();
     }

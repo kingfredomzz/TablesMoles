@@ -326,7 +326,8 @@ public class TableMainLayout extends RelativeLayout {
 
         // RelativeLayout params were very useful here
         // the addRule method is the key to arrange the components properly
-        LayoutParams componentB_Params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        LayoutParams componentB_Params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+        
         componentB_Params.addRule(RelativeLayout.RIGHT_OF, this.tableA.getId());
 
         LayoutParams componentC_Params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
