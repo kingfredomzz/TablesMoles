@@ -170,7 +170,7 @@ public class DetailActivity extends AppCompatActivity {
         });
 
 
-        setTitle(sympol + " " + name);
+        setTitle( name + " (" + Double.toString(atomic_mass) + ")");
 
     }
 

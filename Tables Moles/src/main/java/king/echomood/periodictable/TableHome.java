@@ -165,6 +165,8 @@ public class TableHome extends AppCompatActivity
                             textView1.setText("");
                         } else if (i >= 93 && i <= 109) {
                             try {
+
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom + 15])));
                                 textView.setText((atom + 16) + "");
                                 textView1.setText(letters[atom + 15] + "");
                             } catch (Exception e) {
@@ -174,6 +176,7 @@ public class TableHome extends AppCompatActivity
                             atom++;
                         } else if (i >= 111 && i <= 125) {
                             try {
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom + 30])));
                                 textView.setText((atom + 31) + "");
                                 textView1.setText(letters[atom + 30] + "");
                             } catch (Exception e) {
@@ -183,6 +186,7 @@ public class TableHome extends AppCompatActivity
                             atom++;
                         } else if (i >= 146 && i <= 160) {
                             try {
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[lanth  -1 ])));
                                 textView.setText((lanth ) + "");
                                 textView1.setText(letters[lanth - 1] + "");
                                 lanth++;
@@ -195,6 +199,7 @@ public class TableHome extends AppCompatActivity
                             textView1.setText("");
                         } else if (i >= 164 && i <= 178) {
                             try {
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[actin - 1])));
                                 textView.setText((actin) + "");
                                 textView1.setText(letters[actin - 1] + "");
 
@@ -207,6 +212,7 @@ public class TableHome extends AppCompatActivity
                             break;
                         } else {
                             try {
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom ])));
                                 textView.setText(atom+ "");
                                 textView1.setText(letters[atom] + "");
 
@@ -220,6 +226,7 @@ public class TableHome extends AppCompatActivity
 
 
                         try {
+
                             gridLayout.addView(linearLayout, new GridLayout.LayoutParams(row, column));
                         } catch (Exception e) {
                             Log.e("My Bd", e.toString());
@@ -309,8 +316,8 @@ public class TableHome extends AppCompatActivity
                         }
                         type[x] = results.get(x).getType();
                         numbers[x] = results.get(x).getId();
-                        Log.e("id = " , numbers[x] + "");
-                        Log.e("types = " , type[x] + "");
+                        Log.e("id = (" , numbers[x] + ")");
+                        Log.e("types = (" , type[x] + ")");
                         letters[x] = results.get(x).getSympol();
                         mole[x] = results.get(x).getAtomic_mass();
                     }
@@ -334,6 +341,34 @@ public class TableHome extends AppCompatActivity
     }
 
 
+    int displayColor (String c) {
+
+        int reso_int = R.drawable.alkali_metals ;
+
+        if (c.contains("nonmetal")) {
+            reso_int = R.drawable.nonmetal;
+        } else if (c.contains("noble gas" )) {
+            reso_int = R.drawable.gas_borders;
+        }else if (c.contains("alkali metal")) {
+            reso_int = R.drawable.alkali_metals;
+        } else if (c.contains("alkaline earth metal")) {
+            reso_int = R.drawable.alkine_earth_borders;
+        } else if (c.contains("metalloid")) {
+            reso_int = R.drawable.metalloid;
+        }else if (c.contains("halogen")) {
+            reso_int = R.drawable.halogens;
+        } else if (c.contains("metal") ) {
+            reso_int = R.drawable.metal;
+        } else if (c.contains("transition metal")) {
+            reso_int = R.drawable.transition_metals;
+        } else if (c.contains("lanthanoid")) {
+            reso_int = R.drawable.lanthanoid;
+        } else if (c.contains("actinoid")) {
+            reso_int = R.drawable.actinoid;
+        }
+
+        return  reso_int;
+    }
 
 
 

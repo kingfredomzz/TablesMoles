@@ -474,6 +474,8 @@ public class TableMainLayout extends RelativeLayout {
 
         TextView bodyTextView = new TextView(this.context);
 
+        bodyTextView.setShadowLayer(10,2,2,R.color.yellow_sha);
+
         if (label == "P") {
             bodyTextView.setTextColor(getResources().getColor(R.color.yell));
             bodyTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.yellow_borders));

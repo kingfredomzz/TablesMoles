@@ -63,7 +63,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PreferencesActivity" />
-        <activity android:name=".First">
+        <activity android:name=".First"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

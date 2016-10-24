@@ -30,10 +30,15 @@
 
   <color name="sul_background_D">#FF14212A</color>
 
-  <color name="yell">#EF9329</color>
+
+
+
+  <color name="yell">#e0cb43</color>
   <color name="gree">#169F5C</color>
   <color name="bluws">#0999CD</color>
   <color name="redo">#ca5249</color>
+
+  <color name="yellow_sha">#EF9329</color>
 
   <color name="focus_box_corner">#ffffffff</color>
   <!-- four corner elements for viewfinder -->
