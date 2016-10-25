@@ -69,7 +69,7 @@
           <TextView android:id="@+id/source_language_text_view_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OCR"
+                    android:text=" "
                     android:textColor="@color/result_minor_text"
                     android:textStyle="bold"
                     android:textSize="14sp"
@@ -91,7 +91,7 @@
           <TextView android:id="@+id/translation_language_label_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Translation"
+                    android:text=" "
                     android:textColor="@color/translation_text"
                     android:textStyle="bold"
                     android:textSize="14sp"
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/translation_text"
                     android:textSize="14sp"
-                    android:text="[Target language]"/>
+                    android:text=" "/>
 
         </LinearLayout>
 

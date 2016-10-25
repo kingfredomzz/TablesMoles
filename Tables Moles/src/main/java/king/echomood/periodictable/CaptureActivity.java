@@ -19,11 +19,13 @@ package king.echomood.periodictable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.jar.Manifest;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -34,10 +36,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.text.ClipboardManager;
 import android.text.SpannableStringBuilder;
 import android.text.style.CharacterStyle;
@@ -64,6 +68,7 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 
 import king.echomood.periodictable.camera.CameraManager;
 import king.echomood.periodictable.camera.ShutterButton;
+import king.echomood.periodictable.data.ElementCalculation;
 import king.echomood.periodictable.language.LanguageCodeHelper;
 import king.echomood.periodictable.language.TranslateAsyncTask;
 
@@ -209,17 +214,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   CameraManager getCameraManager() {
     return cameraManager;
   }
-  
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
-    
-    checkFirstLaunch();
-    
-    if (isFirstLaunch) {
-      setDefaultPreferences();
-    }
-    
+
+
+  public void startActions () {
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -227,33 +224,33 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     cameraButtonView = findViewById(R.id.camera_button_view);
     resultView = findViewById(R.id.result_view);
-    
+
     statusViewBottom = (TextView) findViewById(R.id.status_view_bottom);
     registerForContextMenu(statusViewBottom);
     statusViewTop = (TextView) findViewById(R.id.status_view_top);
     registerForContextMenu(statusViewTop);
-    
+
     handler = null;
     lastResult = null;
     hasSurface = false;
     beepManager = new BeepManager(this);
-    
+
     // Camera shutter button
     if (DISPLAY_SHUTTER_BUTTON) {
       shutterButton = (ShutterButton) findViewById(R.id.shutter_button);
       shutterButton.setOnShutterButtonListener(this);
     }
-   
+
     ocrResultView = (TextView) findViewById(R.id.ocr_result_text_view);
     registerForContextMenu(ocrResultView);
     translationView = (TextView) findViewById(R.id.translation_text_view);
     registerForContextMenu(translationView);
-    
+
     progressView = (View) findViewById(R.id.indeterminate_progress_indicator_view);
 
     cameraManager = new CameraManager(getApplication());
     viewfinderView.setCameraManager(cameraManager);
-    
+
     // Set listener to change the size of the viewfinder rectangle.
     viewfinderView.setOnTouchListener(new View.OnTouchListener() {
       int lastX = -1;
@@ -262,80 +259,163 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       @Override
       public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-          lastX = -1;
-          lastY = -1;
-          return true;
-        case MotionEvent.ACTION_MOVE:
-          int currentX = (int) event.getX();
-          int currentY = (int) event.getY();
+          case MotionEvent.ACTION_DOWN:
+            lastX = -1;
+            lastY = -1;
+            return true;
+          case MotionEvent.ACTION_MOVE:
+            int currentX = (int) event.getX();
+            int currentY = (int) event.getY();
 
-          try {
-            Rect rect = cameraManager.getFramingRect();
+            try {
+              Rect rect = cameraManager.getFramingRect();
 
-            final int BUFFER = 50;
-            final int BIG_BUFFER = 60;
-            if (lastX >= 0) {
-              // Adjust the size of the viewfinder rectangle. Check if the touch event occurs in the corner areas first, because the regions overlap.
-              if (((currentX >= rect.left - BIG_BUFFER && currentX <= rect.left + BIG_BUFFER) || (lastX >= rect.left - BIG_BUFFER && lastX <= rect.left + BIG_BUFFER))
-                  && ((currentY <= rect.top + BIG_BUFFER && currentY >= rect.top - BIG_BUFFER) || (lastY <= rect.top + BIG_BUFFER && lastY >= rect.top - BIG_BUFFER))) {
-                // Top left corner: adjust both top and left sides
-                cameraManager.adjustFramingRect( 2 * (lastX - currentX), 2 * (lastY - currentY));
-                viewfinderView.removeResultText();
-              } else if (((currentX >= rect.right - BIG_BUFFER && currentX <= rect.right + BIG_BUFFER) || (lastX >= rect.right - BIG_BUFFER && lastX <= rect.right + BIG_BUFFER)) 
-                  && ((currentY <= rect.top + BIG_BUFFER && currentY >= rect.top - BIG_BUFFER) || (lastY <= rect.top + BIG_BUFFER && lastY >= rect.top - BIG_BUFFER))) {
-                // Top right corner: adjust both top and right sides
-                cameraManager.adjustFramingRect( 2 * (currentX - lastX), 2 * (lastY - currentY));
-                viewfinderView.removeResultText();
-              } else if (((currentX >= rect.left - BIG_BUFFER && currentX <= rect.left + BIG_BUFFER) || (lastX >= rect.left - BIG_BUFFER && lastX <= rect.left + BIG_BUFFER))
-                  && ((currentY <= rect.bottom + BIG_BUFFER && currentY >= rect.bottom - BIG_BUFFER) || (lastY <= rect.bottom + BIG_BUFFER && lastY >= rect.bottom - BIG_BUFFER))) {
-                // Bottom left corner: adjust both bottom and left sides
-                cameraManager.adjustFramingRect(2 * (lastX - currentX), 2 * (currentY - lastY));
-                viewfinderView.removeResultText();
-              } else if (((currentX >= rect.right - BIG_BUFFER && currentX <= rect.right + BIG_BUFFER) || (lastX >= rect.right - BIG_BUFFER && lastX <= rect.right + BIG_BUFFER)) 
-                  && ((currentY <= rect.bottom + BIG_BUFFER && currentY >= rect.bottom - BIG_BUFFER) || (lastY <= rect.bottom + BIG_BUFFER && lastY >= rect.bottom - BIG_BUFFER))) {
-                // Bottom right corner: adjust both bottom and right sides
-                cameraManager.adjustFramingRect(2 * (currentX - lastX), 2 * (currentY - lastY));
-                viewfinderView.removeResultText();
-              } else if (((currentX >= rect.left - BUFFER && currentX <= rect.left + BUFFER) || (lastX >= rect.left - BUFFER && lastX <= rect.left + BUFFER))
-                  && ((currentY <= rect.bottom && currentY >= rect.top) || (lastY <= rect.bottom && lastY >= rect.top))) {
-                // Adjusting left side: event falls within BUFFER pixels of left side, and between top and bottom side limits
-                cameraManager.adjustFramingRect(2 * (lastX - currentX), 0);
-                viewfinderView.removeResultText();
-              } else if (((currentX >= rect.right - BUFFER && currentX <= rect.right + BUFFER) || (lastX >= rect.right - BUFFER && lastX <= rect.right + BUFFER))
-                  && ((currentY <= rect.bottom && currentY >= rect.top) || (lastY <= rect.bottom && lastY >= rect.top))) {
-                // Adjusting right side: event falls within BUFFER pixels of right side, and between top and bottom side limits
-                cameraManager.adjustFramingRect(2 * (currentX - lastX), 0);
-                viewfinderView.removeResultText();
-              } else if (((currentY <= rect.top + BUFFER && currentY >= rect.top - BUFFER) || (lastY <= rect.top + BUFFER && lastY >= rect.top - BUFFER))
-                  && ((currentX <= rect.right && currentX >= rect.left) || (lastX <= rect.right && lastX >= rect.left))) {
-                // Adjusting top side: event falls within BUFFER pixels of top side, and between left and right side limits
-                cameraManager.adjustFramingRect(0, 2 * (lastY - currentY));
-                viewfinderView.removeResultText();
-              } else if (((currentY <= rect.bottom + BUFFER && currentY >= rect.bottom - BUFFER) || (lastY <= rect.bottom + BUFFER && lastY >= rect.bottom - BUFFER))
-                  && ((currentX <= rect.right && currentX >= rect.left) || (lastX <= rect.right && lastX >= rect.left))) {
-                // Adjusting bottom side: event falls within BUFFER pixels of bottom side, and between left and right side limits
-                cameraManager.adjustFramingRect(0, 2 * (currentY - lastY));
-                viewfinderView.removeResultText();
-              }     
+              final int BUFFER = 50;
+              final int BIG_BUFFER = 60;
+              if (lastX >= 0) {
+                // Adjust the size of the viewfinder rectangle. Check if the touch event occurs in the corner areas first, because the regions overlap.
+                if (((currentX >= rect.left - BIG_BUFFER && currentX <= rect.left + BIG_BUFFER) || (lastX >= rect.left - BIG_BUFFER && lastX <= rect.left + BIG_BUFFER))
+                        && ((currentY <= rect.top + BIG_BUFFER && currentY >= rect.top - BIG_BUFFER) || (lastY <= rect.top + BIG_BUFFER && lastY >= rect.top - BIG_BUFFER))) {
+                  // Top left corner: adjust both top and left sides
+                  cameraManager.adjustFramingRect(2 * (lastX - currentX), 2 * (lastY - currentY));
+                  viewfinderView.removeResultText();
+                } else if (((currentX >= rect.right - BIG_BUFFER && currentX <= rect.right + BIG_BUFFER) || (lastX >= rect.right - BIG_BUFFER && lastX <= rect.right + BIG_BUFFER))
+                        && ((currentY <= rect.top + BIG_BUFFER && currentY >= rect.top - BIG_BUFFER) || (lastY <= rect.top + BIG_BUFFER && lastY >= rect.top - BIG_BUFFER))) {
+                  // Top right corner: adjust both top and right sides
+                  cameraManager.adjustFramingRect(2 * (currentX - lastX), 2 * (lastY - currentY));
+                  viewfinderView.removeResultText();
+                } else if (((currentX >= rect.left - BIG_BUFFER && currentX <= rect.left + BIG_BUFFER) || (lastX >= rect.left - BIG_BUFFER && lastX <= rect.left + BIG_BUFFER))
+                        && ((currentY <= rect.bottom + BIG_BUFFER && currentY >= rect.bottom - BIG_BUFFER) || (lastY <= rect.bottom + BIG_BUFFER && lastY >= rect.bottom - BIG_BUFFER))) {
+                  // Bottom left corner: adjust both bottom and left sides
+                  cameraManager.adjustFramingRect(2 * (lastX - currentX), 2 * (currentY - lastY));
+                  viewfinderView.removeResultText();
+                } else if (((currentX >= rect.right - BIG_BUFFER && currentX <= rect.right + BIG_BUFFER) || (lastX >= rect.right - BIG_BUFFER && lastX <= rect.right + BIG_BUFFER))
+                        && ((currentY <= rect.bottom + BIG_BUFFER && currentY >= rect.bottom - BIG_BUFFER) || (lastY <= rect.bottom + BIG_BUFFER && lastY >= rect.bottom - BIG_BUFFER))) {
+                  // Bottom right corner: adjust both bottom and right sides
+                  cameraManager.adjustFramingRect(2 * (currentX - lastX), 2 * (currentY - lastY));
+                  viewfinderView.removeResultText();
+                } else if (((currentX >= rect.left - BUFFER && currentX <= rect.left + BUFFER) || (lastX >= rect.left - BUFFER && lastX <= rect.left + BUFFER))
+                        && ((currentY <= rect.bottom && currentY >= rect.top) || (lastY <= rect.bottom && lastY >= rect.top))) {
+                  // Adjusting left side: event falls within BUFFER pixels of left side, and between top and bottom side limits
+                  cameraManager.adjustFramingRect(2 * (lastX - currentX), 0);
+                  viewfinderView.removeResultText();
+                } else if (((currentX >= rect.right - BUFFER && currentX <= rect.right + BUFFER) || (lastX >= rect.right - BUFFER && lastX <= rect.right + BUFFER))
+                        && ((currentY <= rect.bottom && currentY >= rect.top) || (lastY <= rect.bottom && lastY >= rect.top))) {
+                  // Adjusting right side: event falls within BUFFER pixels of right side, and between top and bottom side limits
+                  cameraManager.adjustFramingRect(2 * (currentX - lastX), 0);
+                  viewfinderView.removeResultText();
+                } else if (((currentY <= rect.top + BUFFER && currentY >= rect.top - BUFFER) || (lastY <= rect.top + BUFFER && lastY >= rect.top - BUFFER))
+                        && ((currentX <= rect.right && currentX >= rect.left) || (lastX <= rect.right && lastX >= rect.left))) {
+                  // Adjusting top side: event falls within BUFFER pixels of top side, and between left and right side limits
+                  cameraManager.adjustFramingRect(0, 2 * (lastY - currentY));
+                  viewfinderView.removeResultText();
+                } else if (((currentY <= rect.bottom + BUFFER && currentY >= rect.bottom - BUFFER) || (lastY <= rect.bottom + BUFFER && lastY >= rect.bottom - BUFFER))
+                        && ((currentX <= rect.right && currentX >= rect.left) || (lastX <= rect.right && lastX >= rect.left))) {
+                  // Adjusting bottom side: event falls within BUFFER pixels of bottom side, and between left and right side limits
+                  cameraManager.adjustFramingRect(0, 2 * (currentY - lastY));
+                  viewfinderView.removeResultText();
+                }
+              }
+            } catch (NullPointerException e) {
+              Log.e(TAG, "Framing rect not available", e);
             }
-          } catch (NullPointerException e) {
-            Log.e(TAG, "Framing rect not available", e);
-          }
-          v.invalidate();
-          lastX = currentX;
-          lastY = currentY;
-          return true;
-        case MotionEvent.ACTION_UP:
-          lastX = -1;
-          lastY = -1;
-          return true;
+            v.invalidate();
+            lastX = currentX;
+            lastY = currentY;
+            return true;
+          case MotionEvent.ACTION_UP:
+            lastX = -1;
+            lastY = -1;
+            return true;
         }
         return false;
       }
     });
-    
+
     isEngineReady = false;
+
+  }
+
+
+  @Override
+  public void onCreate(Bundle icicle) {
+    super.onCreate(icicle);
+    
+    checkFirstLaunch();
+
+    if (isFirstLaunch) {
+      setDefaultPreferences();
+    }
+
+    if (Build.VERSION.SDK_INT > 23) {
+      if (checkPermission()) {
+        startActions();
+      } else {
+        if (shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA) ||
+                shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE ) ||
+                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_PHONE_STATE)
+
+                ) {
+            Toast.makeText(this, "Plz , We want to use the CAMERA !" , Toast.LENGTH_SHORT).show();
+        }
+        setPeromision();
+      }
+    }
+    startActions();
+
+  }
+
+  /*
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+   */
+
+  private final int CAMERA_PERMISION = 1;
+  private final int INTERNET_PERMISION = 2;
+  private final int WRITE_EX_ST_PERMISION = 3;
+  private final int READ_PHONE_STATE_PERMISION = 4;
+  private final int READ_EX_ST_PERMISION = 5;
+
+  private boolean checkPermission() {
+    if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+            (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) ||
+            (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+            (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+            (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            ) {
+      return  false;
+    }
+
+    return  true;
+  }
+
+  private void setPeromision(){
+    ActivityCompat.requestPermissions(this , new String[] {android.Manifest.permission.CAMERA} , CAMERA_PERMISION);
+    ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.INTERNET} , INTERNET_PERMISION);
+    ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE} , WRITE_EX_ST_PERMISION);
+    ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE} , READ_EX_ST_PERMISION);
+    ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.READ_PHONE_STATE} , READ_PHONE_STATE_PERMISION);
+  }
+
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+    if (requestCode == CAMERA_PERMISION ) {
+      if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+        startActions();
+      } else {
+        Log.e(TAG, "Can't Camera Granted");
+      }
+    } else  {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
   }
 
   @Override
@@ -751,7 +831,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView sourceLanguageTextView = (TextView) findViewById(R.id.source_language_text_view);
     sourceLanguageTextView.setText(sourceLanguageReadable);
     TextView ocrResultTextView = (TextView) findViewById(R.id.ocr_result_text_view);
-    ocrResultTextView.setText(ocrResult.getText());
+    ocrResultTextView.setText(ocrResult.getText() );
     // Crudely scale betweeen 22 and 32 -- bigger font for shorter text
     int scaledSize = Math.max(22, 32 - ocrResult.getText().length() / 4);
     ocrResultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
@@ -759,11 +839,25 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView translationLanguageLabelTextView = (TextView) findViewById(R.id.translation_language_label_text_view);
     TextView translationLanguageTextView = (TextView) findViewById(R.id.translation_language_text_view);
     TextView translationTextView = (TextView) findViewById(R.id.translation_text_view);
+
+    ElementCalculation CC = new ElementCalculation();
+    CC.setElement_Formela(ocrResult.getText().toString());
+    CC.accept();
+
+    String final_results = Double.toString(CC.getFinal_Result());
+
+    TextView textView = (TextView) findViewById(R.id.translation_text_view);
+    textView.setText(final_results + " g/mol");
+
+    progressView.setVisibility(View.GONE);
+    setProgressBarVisibility(false);
+
+    /*
     if (isTranslationActive) {
       // Handle translation text fields
       translationLanguageLabelTextView.setVisibility(View.VISIBLE);
-      translationLanguageTextView.setText(targetLanguageReadable);
       translationLanguageTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL), Typeface.NORMAL);
+      translationLanguageTextView.setText(" ");
       translationLanguageTextView.setVisibility(View.VISIBLE);
 
       // Activate/re-activate the indeterminate progress indicator
@@ -772,8 +866,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       setProgressBarVisibility(true);
       
       // Get the translation asynchronously
-      new TranslateAsyncTask(this, sourceLanguageCodeTranslation, targetLanguageCodeTranslation, 
+      new TranslateAsyncTask(this, sourceLanguageCodeTranslation, targetLanguageCodeTranslation,
           ocrResult.getText()).execute();
+
+
     } else {
       translationLanguageLabelTextView.setVisibility(View.GONE);
       translationLanguageTextView.setVisibility(View.GONE);
@@ -781,6 +877,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       progressView.setVisibility(View.GONE);
       setProgressBarVisibility(false);
     }
+    */
+
+
     return true;
   }
   

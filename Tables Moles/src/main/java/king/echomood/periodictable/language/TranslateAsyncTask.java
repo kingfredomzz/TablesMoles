@@ -84,7 +84,7 @@ public final class TranslateAsyncTask extends AsyncTask<String, String, Boolean>
     } else {
       Log.e(TAG, "FAILURE");
       targetLanguageTextView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC), Typeface.ITALIC);
-      targetLanguageTextView.setText("Unavailable");
+      targetLanguageTextView.setText(" ");
 
     }
     

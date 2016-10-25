@@ -1,9 +1,15 @@
 package king.echomood.periodictable;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,6 +26,7 @@ public class MolarCalculater extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_molar_calculater);
 
+
     }
 
     @Override
@@ -29,11 +36,35 @@ public class MolarCalculater extends AppCompatActivity {
         final EditText formela = (EditText) findViewById(R.id.Main_furmela_text);
         final TextView results = (TextView) findViewById(R.id.elem_text);
 
-        ImageButton btn = (ImageButton) findViewById(R.id.camer_Button);
+        ImageButton btn = (ImageButton) findViewById(R.id.Cam_Btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MolarCalculater.this,CaptureActivity.class));
+
+                if (Build.VERSION.SDK_INT >= 23) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                            ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                            ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                            ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                        startActivity(new Intent(MolarCalculater.this, CaptureActivity.class));
+                    } else {
+                        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) &&
+                                shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) &&
+                                shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                                shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)
+                                ) {
+                            startActivity(new Intent(MolarCalculater.this,CaptureActivity.class));
+                        }
+
+                        requestPermissions(new String[] {Manifest.permission.CAMERA} , 0);
+
+                    }
+                }else {
+                    startActivity(new Intent(MolarCalculater.this,CaptureActivity.class));
+                }
+
+
             }
 
         });
@@ -55,6 +86,22 @@ public class MolarCalculater extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startActivity(new Intent(MolarCalculater.this, CaptureActivity.class));
+            } else {
+                Log.e("Bad", "Not Granted");
+            }
+        }
+        else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
 

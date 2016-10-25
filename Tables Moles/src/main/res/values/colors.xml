@@ -30,8 +30,16 @@
 
   <color name="sul_background_D">#FF14212A</color>
 
-
-
+  <color name="alkali_metal" >#E9323E</color>
+  <color name="alkine_earth">#0999CD</color>
+  <color name="gas_color">#7A28CB</color>
+  <color name="halogens">#10EA4A</color>
+  <color name="lanthanoid">#A52B2D</color>
+  <color name="metal">#76C1C9</color>
+  <color name="metalloid">#FC60A8</color>
+  <color name="nonmetal">#ffcd46</color>
+  <color name="transition_metal">#ED3664</color>
+  <color name="actinoid">#F7A8A8</color>
 
   <color name="yell">#e0cb43</color>
   <color name="gree">#169F5C</color>

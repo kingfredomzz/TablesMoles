@@ -134,7 +134,37 @@ public class TableMainLayout extends RelativeLayout {
         for(int x=0; x < columns.length; x++){
             SampleObject sampleObject = new SampleObject(
                     columns[x] ,
-                    "*",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H",
+                    "I",
+                    "J",
+                    "K",
+                    "L",
+                    "M",
+                    "N",
+                    "O",
+                    "P",
+                    "Q",
+                    "R",
+                    "S",
+                    "T",
+                    "U",
+                    "V",
+                    "W"
+
+            );
+
+
+            if (x == 0) {
+                 sampleObject = new SampleObject(
+                         columns[x],
+                         "*",
                     "S",
                     "S",
                     "S",
@@ -147,48 +177,19 @@ public class TableMainLayout extends RelativeLayout {
                     "I",
                     "I",
                     "I",
+                    "I",
+                    "I",
+                    "I",
+                    "I",
                     "-",
+                    "I",
+                    "I",
                     "-",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
                     "I",
                     "P"
-
-            );
-
-            if (x == 1) {
-                 sampleObject = new SampleObject(
-                         "bb" ,
-                         "M",
-                         "S",
-                         "S",
-                         "S",
-                         "S",
-                         "-",
-                         "S",
-                         "P",
-                         "I",
-                         "I",
-                         "I" ,
-                         "I" ,
-                         "I" ,
-                         "-" ,
-                         "-" ,
-                         "I" ,
-                         "I" ,
-                         "I" ,
-                         "I"  ,
-                         "I" ,
-                         "I",
-                         "I",
-                         "P"
                  );
             }
-
+  /*
             if ( x==1 ){
                 sampleObject = new SampleObject(
                         columns[x] ,
@@ -217,6 +218,9 @@ public class TableMainLayout extends RelativeLayout {
                         "S"
                 );
             }
+
+
+
 
 
             if (x ==3) {
@@ -275,6 +279,7 @@ public class TableMainLayout extends RelativeLayout {
                         "S",
                         "S" );
             }
+  */
 
             sampleObjects.add(sampleObject);
         }

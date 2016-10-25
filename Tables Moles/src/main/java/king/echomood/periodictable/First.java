@@ -94,6 +94,7 @@ public class First extends AppCompatActivity {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                finish();
                 startActivity(new Intent(First.this, TableHome.class));
             }
         };

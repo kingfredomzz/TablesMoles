@@ -1,9 +1,11 @@
 package king.echomood.periodictable;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -11,8 +13,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,11 +48,11 @@ public class TableHome extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // declare the variables
-    int[] numbers  ; // for atomic number
-    String[]  letters , type ; // letters flr sypmols
+    int[] numbers; // for atomic number
+    String[] letters, type; // letters flr sypmols
     Double[] mole = new Double[122]; // to get the molar mass
-    int z ;
-    int lanth = 57  , actin = 89;  // for two rows in the bottom
+    int z;
+    int lanth = 57, actin = 89;  // for two rows in the bottom
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class TableHome extends AppCompatActivity
              connect to the database and fill the arrays
              after that i can use them to fill the table (Periodic Table)
         */
-        numbers= new int[118];
+        numbers = new int[118];
         letters = new String[118];
         type = new String[118];
 
@@ -78,6 +82,8 @@ public class TableHome extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null); // this line to show colors for items in Navigation drawer
+
+
     }
 
     @Override
@@ -95,9 +101,10 @@ public class TableHome extends AppCompatActivity
 
         int child_in_Grid = gridLayout.getChildCount();
         // Loop to fill the Grid Layout
-        int r = 0 , atom = 0 , i =0 , n1 = 71;
-        lanth = 57  ; actin = 89;
-        Log.e("Back " , i + " , " + r + " " );
+        int r = 0, atom = 0, i = 0, n1 = 71;
+        lanth = 57;
+        actin = 89;
+        Log.e("Back ", i + " , " + r + " ");
         if (child_in_Grid == 0) {
             for (r = 0; r < 10; r++) {
                 for (int c = 0; c < 18; c++) {
@@ -186,8 +193,8 @@ public class TableHome extends AppCompatActivity
                             atom++;
                         } else if (i >= 146 && i <= 160) {
                             try {
-                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[lanth  -1 ])));
-                                textView.setText((lanth ) + "");
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[lanth - 1])));
+                                textView.setText((lanth) + "");
                                 textView1.setText(letters[lanth - 1] + "");
                                 lanth++;
                             } catch (Exception e) {
@@ -212,8 +219,8 @@ public class TableHome extends AppCompatActivity
                             break;
                         } else {
                             try {
-                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom ])));
-                                textView.setText(atom+ "");
+                                linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom])));
+                                textView.setText(atom + "");
                                 textView1.setText(letters[atom] + "");
 
 
@@ -222,7 +229,6 @@ public class TableHome extends AppCompatActivity
                                 e.printStackTrace();
                             }
                         }
-
 
 
                         try {
@@ -238,19 +244,17 @@ public class TableHome extends AppCompatActivity
         }
 
 
-
-
         // to click a child layout and take you to it's details
         int chiled = gridLayout.getChildCount();
-        Log.e("number in grid = " , chiled + "");
-        Log.e("i = " , i + " ");
-        for (; z < chiled; z ++){
+        Log.e("number in grid = ", chiled + "");
+        Log.e("i = ", i + " ");
+        for (; z < chiled; z++) {
 
             int ch = 0;
             if (z == 0) ch = 1;
-            else if (z >=17 && z <= 19) ch = z - 15;
-            else if (z >= 30 && z <= 37) ch = z-25;
-            else if (z >= 48 && z <= 91) ch = z - 35 ;
+            else if (z >= 17 && z <= 19) ch = z - 15;
+            else if (z >= 30 && z <= 37) ch = z - 25;
+            else if (z >= 48 && z <= 91) ch = z - 35;
             else if (z >= 93 && z <= 109) ch = z - 21;
             else if (z >= 111 && z <= 125) ch = z - 7;
             else if (z >= 146 && z <= 159) ch = z - 89;
@@ -263,13 +267,13 @@ public class TableHome extends AppCompatActivity
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("z = " , z + "");
-                    Log.e("choose = " , chose + " ");
+                    Log.e("z = ", z + "");
+                    Log.e("choose = ", chose + " ");
                     gos(chose);
 
                 }
             });
-            
+
         }
 
     }
@@ -279,28 +283,27 @@ public class TableHome extends AppCompatActivity
         super.onPause();
 
         z = 0;
-        Log.e("dd" , "In paused");
-        Log.e("dd" , z + " = z" );
+        Log.e("dd", "In paused");
+        Log.e("dd", z + " = z");
     }
 
-    void gos (int chos) {
+    void gos(int chos) {
         z = 0;
 
-        Log.e("when clicking z = " , z + " ");
+        Log.e("when clicking z = ", z + " ");
         Intent intent = new Intent(TableHome.this, DetailActivity.class);
-        intent.putExtra("atom" ,chos);
+        intent.putExtra("atom", chos);
         startActivity(intent);
     }
 
     // function to get data from DB and fill the arrays with them
-    public void Connect_To_DB(){
+    public void Connect_To_DB() {
 
 
-        RealmConfiguration realmConfiguration  = new RealmConfiguration.Builder(getApplicationContext()).build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
         Realm realm = Realm.getDefaultInstance();
-
 
 
         try {
@@ -310,21 +313,21 @@ public class TableHome extends AppCompatActivity
                     RealmResults<Element_Class> results = realm.where(Element_Class.class).findAll();
 
 
-                    for (int x =0; x < results.size(); x ++) {
+                    for (int x = 0; x < results.size(); x++) {
                         if (results.get(x) == null) {
                             continue;
                         }
                         type[x] = results.get(x).getType();
                         numbers[x] = results.get(x).getId();
-                        Log.e("id = (" , numbers[x] + ")");
-                        Log.e("types = (" , type[x] + ")");
+                        Log.e("id = (", numbers[x] + ")");
+                        Log.e("types = (", type[x] + ")");
                         letters[x] = results.get(x).getSympol();
                         mole[x] = results.get(x).getAtomic_mass();
                     }
 
                 }
             });
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -341,23 +344,23 @@ public class TableHome extends AppCompatActivity
     }
 
 
-    int displayColor (String c) {
+    int displayColor(String c) {
 
-        int reso_int = R.drawable.alkali_metals ;
+        int reso_int = R.drawable.alkali_metals;
 
         if (c.contains("nonmetal")) {
             reso_int = R.drawable.nonmetal;
-        } else if (c.contains("noble gas" )) {
+        } else if (c.contains("noble gas")) {
             reso_int = R.drawable.gas_borders;
-        }else if (c.contains("alkali metal")) {
+        } else if (c.contains("alkali metal")) {
             reso_int = R.drawable.alkali_metals;
         } else if (c.contains("alkaline earth metal")) {
             reso_int = R.drawable.alkine_earth_borders;
         } else if (c.contains("metalloid")) {
             reso_int = R.drawable.metalloid;
-        }else if (c.contains("halogen")) {
+        } else if (c.contains("halogen")) {
             reso_int = R.drawable.halogens;
-        } else if (c.contains("metal") ) {
+        } else if (c.contains("metal")) {
             reso_int = R.drawable.metal;
         } else if (c.contains("transition metal")) {
             reso_int = R.drawable.transition_metals;
@@ -367,9 +370,8 @@ public class TableHome extends AppCompatActivity
             reso_int = R.drawable.actinoid;
         }
 
-        return  reso_int;
+        return reso_int;
     }
-
 
 
     @Override
@@ -388,10 +390,32 @@ public class TableHome extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view2);
+
+            drawer.openDrawer(Gravity.RIGHT);
+
         }
 
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startActivity(new Intent(TableHome.this, CaptureActivity.class));
+            } else {
+                Log.e("Bad", "Not Granted");
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -402,17 +426,36 @@ public class TableHome extends AppCompatActivity
 
         if (id == R.id.nav_solubilty) {
             startActivity(new Intent(TableHome.this, Sulobility.class));
-        } else if (id == R.id.nav_camera){
+        } else if (id == R.id.nav_camera) {
 
 
-             startActivity(new Intent(TableHome.this, CaptureActivity.class));
+            if (Build.VERSION.SDK_INT >= 23) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                    startActivity(new Intent(TableHome.this, CaptureActivity.class));
+                } else {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) &&
+                            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) &&
+                            shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                            shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)
+                            ) {
+                        startActivity(new Intent(TableHome.this, CaptureActivity.class));
+                    }
+
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 0);
+
+                }
+            }
         } else if (id == R.id.molar_mass) {
-             startActivity(new Intent(TableHome.this, MolarCalculater.class));
+            startActivity(new Intent(TableHome.this, MolarCalculater.class));
         } else if (id == R.id.nav_share) {
-             Uri imageUri;
-             Intent intent;
+            Uri imageUri;
+            Intent intent;
 
-            imageUri = Uri.parse("android.resource://" + getPackageName()+ "/drawable/" + "icon");
+            imageUri = Uri.parse("android.resource://" + getPackageName() + "/drawable/" + "icon");
             intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, "#periodicTable");
@@ -425,7 +468,8 @@ public class TableHome extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }
+
+
+
 
