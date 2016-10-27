@@ -1,8 +1,13 @@
 package king.echomood.periodictable;
 
 import android.content.pm.PackageManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     Realm realm;
     int x = 0;
 
-    int id = 1;
+    int id  = 0;
     String sympol = "";
     String name= "";
     Double atomic_mass= 1.0;
@@ -67,10 +72,15 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         x = 0;
+         int ids = 0;
         int x_sub = 0;
         x_sub = getIntent().getIntExtra("atom" , 0);
 
         x = x_sub - 1;
+
+        ids = x_sub;
+        text_id = (TextView) findViewById(R.id.atom_numers);
+        text_id.setText(ids + "");
 
         text_name = (TextView) findViewById(R.id.name_text) ;
         text_name2  = (TextView) findViewById(R.id.name_text2);
@@ -118,8 +128,8 @@ public class DetailActivity extends AppCompatActivity {
                 text_name.setText(name + " ");
 
                 atomic_mass  = results.get(x).getAtomic_mass();
-                text_atomic_mass.setText(" " + atomic_mass);
-                getText_atomic_mass2.setText(" " + atomic_mass);
+                getText_atomic_mass2.setText(" " + atomic_mass + " (g/mol)");
+                text_atomic_mass.setText(" " + atomic_mass + " (g/mol)");
 
                 atom_radues  = results.get(x).getAtom_radues();
                 text_atom_radues.setText(atom_radues);
@@ -144,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
                 text_Standerd_States.setText(Standerd_States);
 
                 Density  = results.get(x).getDensity();
-                text_Density.setText(Density);
+                text_Density.setText(Density + " (g/cm3)");
 
                 electronegativity  = results.get(x).getElectronegativity();
                 text_electronegativity.setText(electronegativity);
@@ -153,10 +163,10 @@ public class DetailActivity extends AppCompatActivity {
                 text_electronic_configuration.setText(electronic_configuration);
 
                 Boiling_point  = results.get(x).getBoiling_point();
-                text_Boiling_point.setText(Boiling_point);
+                text_Boiling_point.setText(Boiling_point + " K");
 
                 Melting_point  = results.get(x).getMelting_point();
-                text_Melting_point.setText(Melting_point);
+                text_Melting_point.setText(Melting_point + " K");
 
                 Oxidation_states  = results.get(x).getOxidation_states();
                 text_Oxidation_states.setText(Oxidation_states);
@@ -170,7 +180,7 @@ public class DetailActivity extends AppCompatActivity {
         });
 
 
-        setTitle( name + " (" + Double.toString(atomic_mass) + ")");
+        setTitle( name + " (" + String.format( "%.2f", atomic_mass ) + ")");
 
     }
 
@@ -178,7 +188,7 @@ public class DetailActivity extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout3);
 
         int imag = R.drawable.hydrogen_thumb;
-        switch (x) {
+        switch (x + 1) {
             case 1 : imag = R.drawable.hydrogen_thumb; break;
             case 2 : imag = R.drawable.helium_thumb; break;
             case 3 : imag = R.drawable.lithium_thumb; break;
@@ -291,5 +301,30 @@ public class DetailActivity extends AppCompatActivity {
 
         layout.setBackgroundResource(imag);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.detail_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.wiki_sites) {
+
+           Toast.makeText(getApplicationContext(), "Toast" , Toast.LENGTH_SHORT).show();
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

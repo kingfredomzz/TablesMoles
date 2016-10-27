@@ -3,16 +3,16 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="1000dp"
+            android:layout_height="match_parent"
             tools:context="king.echomood.periodictable.DetailActivity"
-            >
+    >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
 
         android:background="#2f3d47"
-        android:layout_height="1850dp">
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -86,10 +86,10 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="340dp"
             android:layout_below="@+id/linearLayout3"
             android:layout_centerHorizontal="true"
-            android:id="@+id/general_info">
+            android:id="@+id/general_info"
+            android:layout_height="370dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -127,7 +127,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
-                    android:text="Hydrogin"
+                    android:text=" "
                     android:id="@+id/name_text2"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -148,7 +148,7 @@
                     android:textSize="18dp"
                     android:layout_marginTop="3dp"  />
                 <TextView
-                    android:text="21"
+                    android:text=" "
                     android:layout_height="28dp"
                     android:layout_width="match_parent"
                     android:id="@+id/atom_numers"
@@ -171,7 +171,7 @@
                 <TextView
                     android:layout_width="match_parent"
 
-                    android:text="Metal"
+                    android:text=" "
                     android:id="@+id/type_text"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -196,7 +196,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1990"
+                    android:text=" "
                     android:id="@+id/year_text"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -215,7 +215,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gas"
+                    android:text=" "
                     android:id="@+id/standers_state"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -230,10 +230,10 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="485dp"
             android:layout_below="@+id/general_info"
             android:id="@+id/propertiest_layout"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_height="515dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -274,7 +274,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="1.0075"
+                    android:text=" "
                     android:id="@+id/atomic_text2"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -297,7 +297,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="1.44"
+                    android:text=" "
                     android:id="@+id/density_text"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -319,7 +319,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="332 C"
+                    android:text=" "
                     android:id="@+id/melting_point"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -341,7 +341,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="2222 C"
+                    android:text=" "
                     android:id="@+id/boiling_point"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -363,7 +363,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="32"
+                    android:text=" "
                     android:id="@+id/atom_raduis"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -385,7 +385,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="42"
+                    android:text="  "
                     android:id="@+id/ion_raduis"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -408,7 +408,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="Hddfe"
+                    android:text=" "
                     android:id="@+id/bonding_type_text"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -431,7 +431,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="Hddfe"
+                    android:text=" "
                     android:id="@+id/oxidatiom_text"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -495,7 +495,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="1e"
+                    android:text=" "
                     android:id="@+id/elec_confi"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -518,7 +518,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="4.4"
+                    android:text=" "
                     android:id="@+id/electromagnifity"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -540,7 +540,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="1222 "
+                    android:text=" "
                     android:id="@+id/IE"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
@@ -562,7 +562,7 @@
                     android:layout_height="28dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/borders"
-                    android:text="23 "
+                    android:text="  "
                     android:id="@+id/EA_energy"
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"

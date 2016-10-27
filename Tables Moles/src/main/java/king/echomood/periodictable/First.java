@@ -56,26 +56,26 @@ public class First extends AppCompatActivity {
         setContentView(R.layout.activity_first);
 
         // inttial the values
-        id = new int[118];
-        sympol = new String[118];
-        name = new String[118];
-        atomic_mass = new Double[118];
+        id = new int[119];
+        sympol = new String[119];
+        name = new String[119];
+        atomic_mass = new Double[119];
 
-        type = new String[118];
-        year_discoverd = new String[118];
-        Standerd_States = new String[118];
-        bonding_type = new String[118];
-        Density = new String[118];
-        atom_radues = new String[118];
-        ios_radus = new String[118];
+        type = new String[119];
+        year_discoverd = new String[119];
+        Standerd_States = new String[119];
+        bonding_type = new String[119];
+        Density = new String[119];
+        atom_radues = new String[119];
+        ios_radus = new String[119];
 
-        Oxidation_states = new String[118];
-        Melting_point = new String[118];
-        Boiling_point = new String[118];
-        electronic_configuration = new String[118];
-        electronegativity = new String[118];
-        ionation_energy = new String[118];
-        Activation_Energy = new String[118];
+        Oxidation_states = new String[119];
+        Melting_point = new String[119];
+        Boiling_point = new String[119];
+        electronic_configuration = new String[119];
+        electronegativity = new String[119];
+        ionation_energy = new String[119];
+        Activation_Energy = new String[119];
 
         // get data from csv and store them in array
         connect();
@@ -111,7 +111,7 @@ public class First extends AppCompatActivity {
 
         try {
             // get whole data
-            CSVReader reader = new CSVReader(new InputStreamReader(getResources().getAssets().open("per.csv")));
+            CSVReader reader = new CSVReader(new InputStreamReader(getResources().getAssets().open("per_data.csv")));
 
             // enter data to string list for each rows
             for (;;) {

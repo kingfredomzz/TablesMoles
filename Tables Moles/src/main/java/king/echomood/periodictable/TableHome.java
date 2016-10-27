@@ -170,7 +170,7 @@ public class TableHome extends AppCompatActivity
                         } else if (i >= 126 && i <= 145) {
                             textView.setText("");
                             textView1.setText("");
-                        } else if (i >= 93 && i <= 109) {
+                        } else if (i >= 93 && i <= 110) {
                             try {
 
                                 linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom + 15])));
@@ -220,7 +220,7 @@ public class TableHome extends AppCompatActivity
                         } else {
                             try {
                                 linearLayout.setBackgroundDrawable(getResources().getDrawable(displayColor(type[atom])));
-                                textView.setText(atom + "");
+                                textView.setText((atom +1) + "");
                                 textView1.setText(letters[atom] + "");
 
 
@@ -255,11 +255,11 @@ public class TableHome extends AppCompatActivity
             else if (z >= 17 && z <= 19) ch = z - 15;
             else if (z >= 30 && z <= 37) ch = z - 25;
             else if (z >= 48 && z <= 91) ch = z - 35;
-            else if (z >= 93 && z <= 109) ch = z - 21;
+            else if (z >= 93 && z <= 110) ch = z - 21;
             else if (z >= 111 && z <= 125) ch = z - 7;
             else if (z >= 146 && z <= 159) ch = z - 89;
             else if (z >= 164 && z <= 177) ch = z - 75;
-            else ch = z;
+            else ch = 243;
             final int chose = ch;
 
             LinearLayout c = (LinearLayout) gridLayout.getChildAt(z);
@@ -267,10 +267,12 @@ public class TableHome extends AppCompatActivity
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (chose !=243 ) {
+
                     Log.e("z = ", z + "");
                     Log.e("choose = ", chose + " ");
                     gos(chose);
-
+                    }
                 }
             });
 

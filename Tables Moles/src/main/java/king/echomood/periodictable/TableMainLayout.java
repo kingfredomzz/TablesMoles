@@ -189,7 +189,7 @@ public class TableMainLayout extends RelativeLayout {
                     "P"
                  );
             }
-  /*
+
             if ( x==1 ){
                 sampleObject = new SampleObject(
                         columns[x] ,
@@ -212,9 +212,9 @@ public class TableMainLayout extends RelativeLayout {
                         "S" ,
                         "S" ,
                         "S" ,
-                        "S"  ,
+                        "-"  ,
                         "S" ,
-                        "-",
+                        "S",
                         "S"
                 );
             }
@@ -223,7 +223,7 @@ public class TableMainLayout extends RelativeLayout {
 
 
 
-            if (x ==3) {
+            if (x ==2) {
                 sampleObject = new SampleObject(
                         columns[x] ,
                         "S",
@@ -236,20 +236,48 @@ public class TableMainLayout extends RelativeLayout {
                         "I",
                         "I",
                         "P",
-                        "P" ,
-                        "I" ,
-                        "-" ,
-                        "I" ,
                         "P",
+                        "I",
+                        "S" ,
+                        "S" ,
+                        "-" ,
+                        "S" ,
+                        "I",
                         "I" ,
+                        "S" ,
+                        "S" ,
                         "P" ,
-                        "S" ,
-                        "S" ,
                         "S"  ,
-                        "I" ,
-                        "S",
                         "P"
                 );
+            }
+
+            if (x==3){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "I",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S" ,
+                        "S" ,
+                        "P" ,
+                        "S" ,
+                        "S",
+                        "S" ,
+                        "-" ,
+                        "I" ,
+                        "S" ,
+                        "S"  ,
+                        "S" ,
+                        "S",
+                        "S" );
             }
 
             if (x==4){
@@ -262,24 +290,275 @@ public class TableMainLayout extends RelativeLayout {
                         "S",
                         "I",
                         "S",
-                        "I",
-                        "I",
-                        "P",
+                        "S",
+                        "S",
+                        "S",
+                        "S" ,
+                        "S" ,
                         "P" ,
-                        "I" ,
+                        "S" ,
+                        "-",
+                        "S" ,
                         "-" ,
                         "I" ,
-                        "S",
-                        "P" ,
-                        "S" ,
-                        "S" ,
                         "S" ,
                         "S"  ,
+                        "P" ,
+                        "S",
+                        "S" );
+            }
+
+            if (x==5){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "I",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S" ,
+                        "-" ,
+                        "I" ,
+                        "-" ,
+                        "-",
+                        "S" ,
+                        "-" ,
+                        "I" ,
+                        "S" ,
+                        "P"  ,
                         "-" ,
                         "S",
                         "S" );
             }
-  */
+
+            if (x==6){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "I",
+                        "-",
+                        "-",
+                        "-",
+                        "I",
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "-" ,
+                        "-",
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "I"  ,
+                        "I" ,
+                        "-",
+                        "S" );
+            }
+
+            if (x==7){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "P",
+                        "P",
+                        "P",
+                        "P",
+                        "P",
+                        "I" ,
+                        "-" ,
+                        "I" ,
+                        "-" ,
+                        "I",
+                        "P" ,
+                        "I" ,
+                        "I" ,
+                        "-" ,
+                        "I"  ,
+                        "-" ,
+                        "-",
+                        "I" );
+            }
+
+            if (x==8){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "P",
+                        "I",
+                        "P",
+                        "S",
+                        "S",
+                        "S" ,
+                        "S" ,
+                        "P" ,
+                        "S" ,
+                        "S",
+                        "S" ,
+                        "S" ,
+                        "P" ,
+                        "S" ,
+                        "S"  ,
+                        "-" ,
+                        "S",
+                        "I" );
+            }
+
+            if (x==9){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "P",
+                        "P",
+                        "I",
+                        "P",
+                        "-",
+                        "I" ,
+                        "-" ,
+                        "I" ,
+                        "-" ,
+                        "-",
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "-" ,
+                        "I"  ,
+                        "I" ,
+                        "-",
+                        "I" );
+            }
+
+            if (x==10){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "I",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "I",
+                        "I",
+                        "P",
+                        "-",
+                        "I",
+                        "I" ,
+                        "-" ,
+                        "-" ,
+                        "-" ,
+                        "-",
+                        "I" ,
+                        "I" ,
+                        "-" ,
+                        "-" ,
+                        "-"  ,
+                        "-" ,
+                        "-",
+                        "I" );
+            }
+
+            if (x==11){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "I",
+                        "S",
+                        "S",
+                        "S",
+                        "I",
+                        "I",
+                        "I",
+                        "P",
+                        "I",
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "I",
+                        "I" ,
+                        "I" ,
+                        "I" ,
+                        "P" ,
+                        "I"  ,
+                        "I" ,
+                        "I",
+                        "I" );
+            }
+
+            if (x==12){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "I",
+                        "I",
+                        "P",
+                        "S",
+                        "I",
+                        "I" ,
+                        "I" ,
+                        "-" ,
+                        "-" ,
+                        "-",
+                        "-" ,
+                        "I" ,
+                        "-" ,
+                        "-" ,
+                        "-"  ,
+                        "-" ,
+                        "-",
+                        "P" );
+            }
+
+            if (x==13){
+                sampleObject = new SampleObject(
+                        columns[x] ,
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "S" ,
+                        "S" ,
+                        "S" ,
+                        "S" ,
+                        "S",
+                        "S" ,
+                        "S" ,
+                        "S" ,
+                        "S" ,
+                        "S"  ,
+                        "S" ,
+                        "S",
+                        "S" );
+            }
 
             sampleObjects.add(sampleObject);
         }

@@ -81,9 +81,11 @@
 
         </activity>
         <activity android:name=".Sulobility"
+                  android:label="Sulobility"
                   android:parentActivityName=".TableHome"
             ></activity>
         <activity android:name=".MolarCalculater"
+                  android:label="MolarCalculater"
                   android:parentActivityName=".TableHome"></activity>
     </application>
 
