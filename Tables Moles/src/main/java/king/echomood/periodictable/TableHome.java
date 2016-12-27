@@ -408,9 +408,10 @@ public class TableHome extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
+ /*
         if (requestCode == 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            if (grantResults[0] == PackageManager.PERMISS/ION_GRANTED) {
                 startActivity(new Intent(TableHome.this, CaptureActivity.class));
             } else {
                 Log.e("Bad", "Not Granted");
@@ -418,6 +419,8 @@ public class TableHome extends AppCompatActivity
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        */
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -429,7 +432,7 @@ public class TableHome extends AppCompatActivity
         if (id == R.id.nav_solubilty) {
             startActivity(new Intent(TableHome.this, Sulobility.class));
         } else if (id == R.id.nav_camera) {
-
+            /*
 
             if (Build.VERSION.SDK_INT >= 23) {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
@@ -451,6 +454,7 @@ public class TableHome extends AppCompatActivity
 
                 }
             }
+            */
         } else if (id == R.id.molar_mass) {
             startActivity(new Intent(TableHome.this, MolarCalculater.class));
         } else if (id == R.id.nav_share) {

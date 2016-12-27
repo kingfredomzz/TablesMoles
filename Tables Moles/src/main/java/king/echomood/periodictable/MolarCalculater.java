@@ -41,28 +41,31 @@ public class MolarCalculater extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                /*
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
                             ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                             ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                             ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                             ) {
-                        startActivity(new Intent(MolarCalculater.this, CaptureActivity.class));
+
                     } else {
                         if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) &&
                                 shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) &&
                                 shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                                 shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)
                                 ) {
-                            startActivity(new Intent(MolarCalculater.this,CaptureActivity.class));
+
                         }
 
                         requestPermissions(new String[] {Manifest.permission.CAMERA} , 0);
 
                     }
                 }else {
-                    startActivity(new Intent(MolarCalculater.this,CaptureActivity.class));
+
                 }
+
+                */
 
 
             }
@@ -94,11 +97,13 @@ public class MolarCalculater extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (requestCode == 0) {
+            /*
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivity(new Intent(MolarCalculater.this, CaptureActivity.class));
             } else {
                 Log.e("Bad", "Not Granted");
             }
+            */
         }
         else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
