@@ -843,7 +843,20 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     ElementCalculation CC = new ElementCalculation();
     String result = ocrResult.getText().toString();
-    CC.setElement_Formela(ocrResult.getText().toString());
+
+    char[] subArra = result.toCharArray();
+    for (int i=0; i < subArra.length; i++) {
+      Log.d("chart" , ":" + subArra[i]);
+      if (subArra[i] == 'C') {
+
+        if (subArra[i+1] == 'I') {
+          subArra[i+1] = 'l';
+          Log.d("chaned" , "");
+        }
+      }
+    }
+    result = subArra.toString();
+    CC.setElement_Formela(result);
     CC.accept();
 
     String final_results = Double.toString(CC.getFinal_Result());
