@@ -454,6 +454,7 @@ public class TableHome extends AppCompatActivity
         } else if (id == R.id.molar_mass) {
             startActivity(new Intent(TableHome.this, MolarCalculater.class));
         } else if (id == R.id.nav_share) {
+
             Uri imageUri;
             Intent intent;
 

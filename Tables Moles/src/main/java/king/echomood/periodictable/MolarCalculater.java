@@ -74,6 +74,7 @@ public class MolarCalculater extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ElementCalculation elementCalculation = new ElementCalculation();
+
                 elementCalculation.setElement_Formela(formela.getText().toString());
                 elementCalculation.accept();
                 results.setText(Double.toString(elementCalculation.getFinal_Result()) + " g/m" );

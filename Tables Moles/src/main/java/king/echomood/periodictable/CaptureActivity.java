@@ -60,6 +60,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -838,15 +839,16 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     TextView translationLanguageLabelTextView = (TextView) findViewById(R.id.translation_language_label_text_view);
     TextView translationLanguageTextView = (TextView) findViewById(R.id.translation_language_text_view);
-    TextView translationTextView = (TextView) findViewById(R.id.translation_text_view);
+
 
     ElementCalculation CC = new ElementCalculation();
+    String result = ocrResult.getText().toString();
     CC.setElement_Formela(ocrResult.getText().toString());
     CC.accept();
 
     String final_results = Double.toString(CC.getFinal_Result());
 
-    TextView textView = (TextView) findViewById(R.id.translation_text_view);
+    EditText textView = (EditText) findViewById(R.id.translation_text_view);
     textView.setText(final_results + " g/mol");
 
     progressView.setVisibility(View.GONE);

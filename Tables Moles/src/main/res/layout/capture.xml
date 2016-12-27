@@ -126,7 +126,7 @@
                     android:paddingLeft="12dip"
                     android:autoLink="web"/>
         
-          <TextView android:id="@+id/translation_text_view"
+          <EditText android:id="@+id/translation_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/translation_text"
