@@ -1,42 +1,64 @@
 package king.echomood.periodictable;
 
 import android.Manifest;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import king.echomood.periodictable.data.ElementCalculation;
 
-public class MolarCalculater extends AppCompatActivity {
+public class MolarCalculater extends Fragment {
 
+    View view;
+    ArrayAdapter<String> adapter;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_molar_calculater);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_molar_calculater , container , false);
 
 
+
+        return view;
     }
 
+
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
+        final EditText formela = (EditText) view.findViewById(R.id.Main_furmela_text);
+        final TextView results = (TextView) view.findViewById(R.id.elem_text);
 
-        final EditText formela = (EditText) findViewById(R.id.Main_furmela_text);
-        final TextView results = (TextView) findViewById(R.id.elem_text);
 
-        ImageButton btn = (ImageButton) findViewById(R.id.Cam_Btn);
+        ImageButton btn = (ImageButton) view.findViewById(R.id.Cam_Btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +94,7 @@ public class MolarCalculater extends AppCompatActivity {
 
         });
 
-        Button calcule_Btn = (Button) findViewById(R.id.Calculate_BTN);
+        Button calcule_Btn = (Button) view.findViewById(R.id.Calculate_BTN);
         calcule_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,15 +104,13 @@ public class MolarCalculater extends AppCompatActivity {
                 elementCalculation.accept();
                 results.setText(Double.toString(elementCalculation.getFinal_Result()) + " g/m" );
 
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputManager = (InputMethodManager)  getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
 
             }
         });
-
     }
 
     @Override

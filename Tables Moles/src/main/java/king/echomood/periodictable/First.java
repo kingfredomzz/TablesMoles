@@ -95,7 +95,7 @@ public class First extends AppCompatActivity {
             @Override
             public void run() {
                 finish();
-                startActivity(new Intent(First.this, TableHome.class));
+                startActivity(new Intent(First.this, HomeContainer.class));
             }
         };
         Timer timer = new Timer();
@@ -106,14 +106,16 @@ public class First extends AppCompatActivity {
     public void connect(){
 
         // initial var for data
-        String[] next  ;
-        List<String[]> list = new ArrayList<String[]>() ;
+        String[] next   ;
+        String[] next2 = new String[0];
+        List<String[]> list = new ArrayList<String[]>() ,  list1 = new ArrayList<String[]>() ;
 
         try {
             // get whole data
             CSVReader reader = new CSVReader(new InputStreamReader(getResources().getAssets().open("per_data.csv")));
 
             // enter data to string list for each rows
+
             for (;;) {
                 next = reader.readNext();
                 if (next != null) {
@@ -144,6 +146,25 @@ public class First extends AppCompatActivity {
                 type[i] = list.get(i)[18];
                 year_discoverd[i] = list.get(i)[19];
             }
+
+
+            // get whole data
+            CSVReader reader1 = new CSVReader(new InputStreamReader(getResources().getAssets().open("hemss.csv")));
+
+            // enter data to string list for each rows
+
+            for (;;) {
+                next = reader1.readNext();
+                if (next != null) {
+                    list1.add(next2);
+                    Log.d("The next 2 : " , next2.toString());
+                }else {
+                    break;
+                }
+            }
+
+
+
         }catch (Exception e) {
             Log.e("Error" , e.toString());
         }

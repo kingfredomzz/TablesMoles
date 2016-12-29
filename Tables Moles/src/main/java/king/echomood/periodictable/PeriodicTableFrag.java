@@ -1,51 +1,32 @@
 package king.echomood.periodictable;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.AttributeSet;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import king.echomood.periodictable.data.Element_Class;
 
-/*
-* This activity is to show periodic table like the original
-* also it has the navigation drawer show where we can navigate
-* when we click to any element, this will take us to the detail activity
-
+/**
+ * Created by yousf on 12/28/16.
  */
 
-public class TableHome extends AppCompatActivity
-        {
+public class PeriodicTableFrag extends Fragment {
+
+
 
     // declare the variables
     int[] numbers; // for atomic number
@@ -53,40 +34,31 @@ public class TableHome extends AppCompatActivity
     Double[] mole = new Double[122]; // to get the molar mass
     int z;
     int lanth = 57, actin = 89;  // for two rows in the bottom
+    View view;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_table_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        z = 0;
-
-        /* init the variables
-            the way: I make 3 variables global, why?
-             I will init them here when i create the activity, then i
-             connect to the database and fill the arrays
-             after that i can use them to fill the table (Periodic Table)
-        */
+         view = inflater.inflate(R.layout.activity_table_home , container , false);
         numbers = new int[118];
         letters = new String[118];
         type = new String[118];
 
 
-
-
+        return view;
     }
 
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         // connect to the DB and fill the arrays:
         // numers, letters and type
         Connect_To_DB();
 
         // initial the Grid Layout
-        GridLayout gridLayout = (GridLayout) findViewById(R.id.GG);
+        GridLayout gridLayout = (GridLayout) view.findViewById(R.id.GG);
 
         gridLayout.setRowCount(10);
         gridLayout.setColumnCount(18);
@@ -106,7 +78,7 @@ public class TableHome extends AppCompatActivity
                     } else {
 
                         // create layout for each elemnts
-                        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+                        LinearLayout linearLayout = new LinearLayout(getActivity());
 
                         // layouts will be vertically so we can order widgets and the properties like we wants
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -119,9 +91,9 @@ public class TableHome extends AppCompatActivity
 
 
                         // textview for the atomic number, and the sympol
-                        TextView textView = new TextView(getApplicationContext()), textView1 = new TextView(getApplicationContext());
+                        TextView textView = new TextView(getActivity()), textView1 = new TextView(getActivity());
                         // for mole
-                        TextView moleText = new TextView(getApplicationContext());
+                        TextView moleText = new TextView(getActivity());
 
 
                         textView.setTextColor(this.getResources().getColor(R.color.sympleColor));
@@ -261,31 +233,25 @@ public class TableHome extends AppCompatActivity
                 public void onClick(View view) {
                     if (chose !=243 ) {
 
-                    Log.e("z = ", z + "");
-                    Log.e("choose = ", chose + " ");
-                    gos(chose);
+                        Log.e("z = ", z + "");
+                        Log.e("choose = ", chose + " ");
+                        gos(chose);
                     }
                 }
             });
 
         }
 
+
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-        z = 0;
-        Log.e("dd", "In paused");
-        Log.e("dd", z + " = z");
-    }
 
     void gos(int chos) {
         z = 0;
 
         Log.e("when clicking z = ", z + " ");
-        Intent intent = new Intent(TableHome.this, DetailActivity.class);
+        Intent intent = new Intent(getActivity().getBaseContext(), DetailActivity.class);
         intent.putExtra("atom", chos);
         startActivity(intent);
     }
@@ -294,7 +260,7 @@ public class TableHome extends AppCompatActivity
     public void Connect_To_DB() {
 
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity().getBaseContext()).build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
         Realm realm = Realm.getDefaultInstance();
@@ -360,12 +326,6 @@ public class TableHome extends AppCompatActivity
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.table_home, menu);
-        return true;
-    }
 
 
 
@@ -385,9 +345,4 @@ public class TableHome extends AppCompatActivity
 
         */
     }
-
 }
-
-
-
-
