@@ -13,14 +13,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 import au.com.bytecode.opencsv.CSVReader;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import king.echomood.periodictable.data.Element_Class;
+import king.echomood.periodictable.data.FormulasElements;
 
 
 /* this activity is get data from (CSV file) and then enter the data to database
@@ -29,6 +33,8 @@ import king.echomood.periodictable.data.Element_Class;
  * */
 
 public class First extends AppCompatActivity {
+
+    public int size_form = 14;
 
     // variables for the database column
     private int[] id;
@@ -49,6 +55,9 @@ public class First extends AppCompatActivity {
     private String[] electronegativity;
     private String[] ionation_energy;
     private String[] Activation_Energy;
+    private int[] for_id;
+    private String[] for_formula;
+    private String[] for_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +86,43 @@ public class First extends AppCompatActivity {
         ionation_energy = new String[119];
         Activation_Energy = new String[119];
 
+        for_id = new int[size_form];
+        for_formula = new String[size_form];
+        for_name = new String[size_form];
+
+        // delete all data from database to refresh
+        deleteDatabaseR();
+
         // get data from csv and store them in array
         connect();
 
         // copy data to the database
         to_DataBase();
 
+        exportDatabase();
+
+    }
+
+    private void deleteDatabaseR() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<FormulasElements> form = realm.where(FormulasElements.class).findAll();
+                form.deleteAllFromRealm();
+
+                RealmResults<Element_Class> ele = realm.where(Element_Class.class).findAll();
+                ele.deleteAllFromRealm();
+            }
+        });
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
         // thread to go the periodic table activity after 2 s (2000 ms)
         TimerTask task = new TimerTask() {
@@ -107,7 +141,7 @@ public class First extends AppCompatActivity {
 
         // initial var for data
         String[] next   ;
-        String[] next2 = new String[0];
+
         List<String[]> list = new ArrayList<String[]>() ,  list1 = new ArrayList<String[]>() ;
 
         try {
@@ -149,15 +183,22 @@ public class First extends AppCompatActivity {
 
 
             // get whole data
-            CSVReader reader1 = new CSVReader(new InputStreamReader(getResources().getAssets().open("hemss.csv")));
+            CSVReader reader1 = new CSVReader(new InputStreamReader(getResources().getAssets().open("test.csv")));
 
             // enter data to string list for each rows
-
-            for (;;) {
-                next = reader1.readNext();
-                if (next != null) {
+            String[] next2 ;
+            for (int i = 0; i < size_form  ; i++) {
+                next2 = reader1.readNext();
+                if (next2 != null) {
                     list1.add(next2);
-                    Log.d("The next 2 : " , next2.toString());
+                    String name = Arrays.toString(next2);
+                    String[] nemeModified = name.split(",");
+                    Log.d("The Formula 2 : " , nemeModified[0] );
+                    for_formula[i] = nemeModified[0];
+                    Log.d("The Name 2 : " , nemeModified[1] );
+                    for_name[i] = nemeModified[1] ;
+                    for_id[i] = i;
+                    Log.d(" Id " , i + " ");
                 }else {
                     break;
                 }
@@ -173,8 +214,7 @@ public class First extends AppCompatActivity {
     // function to copy data from the Global Arrays to Realm Object data/ElementClass.java
     private void to_DataBase() {
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
-        Realm.setDefaultConfiguration(realmConfiguration);
+
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
@@ -185,6 +225,7 @@ public class First extends AppCompatActivity {
                 try {
                     for (int i = 0; i < name.length; i++) {
                         Element_Class elemnt = realm.createObject(Element_Class.class);
+
                         elemnt.setId(id[i + 1]);
 
                         elemnt.setName(name[i]);
@@ -207,8 +248,27 @@ public class First extends AppCompatActivity {
 
 
                     }
+
+
                 }catch (Exception e) {
                     Log.e("Error : " , e.toString());
+                }
+            }
+        });
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                try {
+                    for (int i = 0; i < size_form; i++) {
+                        FormulasElements formula = realm.createObject(FormulasElements.class);
+                        formula.setID(for_id[i]);
+                        formula.setFormula(for_formula[i]);
+                        formula.setName(for_name[i]);
+                        Log.d("Done " , i + "");
+                    }
+                }catch (Exception e ) {
+                    e.printStackTrace();
                 }
             }
         });

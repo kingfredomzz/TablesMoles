@@ -35,6 +35,11 @@ import java.util.List;
 import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+import king.echomood.periodictable.data.ElementCalculation;
+import king.echomood.periodictable.data.FormulasElements;
 
 /**
  * Created by yousf on 12/28/16.
@@ -42,20 +47,22 @@ import au.com.bytecode.opencsv.CSVReader;
 
 public class SearchFragment extends Fragment {
 
+    public int size_form = 13;
     EditText text;
     private ArrayAdapter<String> adapter;
     private List<String> list;
     ListView listView;
     View view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.search, container, false);
         ListView listView = (ListView) view.findViewById(R.id.listSuggest);
-        ArrayList<String> list = new ArrayList<>();
+        list = new ArrayList<>();
 
 
-//        getData();
+       getData();
 
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1 , list);
 
@@ -121,25 +128,23 @@ public class SearchFragment extends Fragment {
         String[] next  ;
         List<String[]> main = new ArrayList<String[]>() ;
 
-        try {
-            // get whole data
-            CSVReader reader = new CSVReader(new InputStreamReader(getResources().getAssets().open("per_data.csv")));
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity().getBaseContext()).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
-            // enter data to string list for each rows
+        Realm realm = Realm.getDefaultInstance();
 
-            for (;;) {
-                next = reader.readNext();
-                Log.d("The text is " , next.toString());
-                if (next != null) {
-                    main.add(next);
-                }else {
-                    break;
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<FormulasElements> formula = realm.where(FormulasElements.class).findAll();
+                List<String> temp_lest = new ArrayList<String>();
+                for (int i=0; i < size_form ; i ++) {
+                    list.add( formula.get(i).getFormula());
                 }
-            }
 
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            }
+        });
     }
 
 
