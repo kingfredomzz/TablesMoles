@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -47,27 +48,18 @@ import king.echomood.periodictable.data.FormulasElements;
 
 public class SearchFragment extends Fragment {
 
-    public int size_form = 13;
+    public int size_form = 1359;
     EditText text;
     private ArrayAdapter<String> adapter;
     private List<String> list;
     ListView listView;
     View view;
-
+    List<String> temps;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.search, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.listSuggest);
-        list = new ArrayList<>();
 
-
-       getData();
-
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1 , list);
-
-
-        listView.setAdapter(adapter);
         return  view;
     }
 
@@ -89,8 +81,17 @@ public class SearchFragment extends Fragment {
         super.onResume();
 
 
-        text = (EditText) view.findViewById(R.id.searchText);
+        final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
+        list = new ArrayList<>();
 
+
+        getData();
+
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1 , list);
+
+
+        listView.setAdapter(adapter);
+        text = (EditText) view.findViewById(R.id.searchText);
         text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -99,23 +100,12 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
             }
 
 
             @Override
             public void afterTextChanged(Editable s) {
                 adapter.getFilter().filter(s);
-
-                try {
-
-                    Collections.sort(list, sort_list);
-                    Log.d("The list : " , list.toString());
-                    adapter.notifyDataSetChanged();
-                }catch (Exception e) {
-                    Log.d("Error" , e.toString());
-                }
 
             }
         });
@@ -138,8 +128,12 @@ public class SearchFragment extends Fragment {
             public void execute(Realm realm) {
                 RealmResults<FormulasElements> formula = realm.where(FormulasElements.class).findAll();
                 List<String> temp_lest = new ArrayList<String>();
-                for (int i=0; i < size_form ; i ++) {
-                    list.add( formula.get(i).getFormula());
+                for (int i=0; i < formula.size() ; i ++) {
+                    if ( formula.get(i).getFormula() != null) {
+                        String form = formula.get(i).getName() + " - " + formula.get(i).getFormula();
+                        form.replace("[" , " ");
+                        list.add(form);
+                    }
                 }
 
 

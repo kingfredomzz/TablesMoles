@@ -246,6 +246,11 @@ public class PeriodicTableFrag extends Fragment {
     }
 
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        z = 0;
+    }
 
     void gos(int chos) {
         z = 0;

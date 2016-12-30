@@ -34,7 +34,7 @@ import king.echomood.periodictable.data.FormulasElements;
 
 public class First extends AppCompatActivity {
 
-    public int size_form = 14;
+    public int size_form = 1359;
 
     // variables for the database column
     private int[] id;
@@ -63,6 +63,9 @@ public class First extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
         // inttial the values
         id = new int[119];
@@ -121,8 +124,7 @@ public class First extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
-        Realm.setDefaultConfiguration(realmConfiguration);
+
 
         // thread to go the periodic table activity after 2 s (2000 ms)
         TimerTask task = new TimerTask() {
@@ -193,8 +195,10 @@ public class First extends AppCompatActivity {
                     list1.add(next2);
                     String name = Arrays.toString(next2);
                     String[] nemeModified = name.split(",");
+                    nemeModified[0].replace("]" , "");
                     Log.d("The Formula 2 : " , nemeModified[0] );
                     for_formula[i] = nemeModified[0];
+                    for_formula[i] =  for_formula[i].replaceAll("\\[+", " ");
                     Log.d("The Name 2 : " , nemeModified[1] );
                     for_name[i] = nemeModified[1] ;
                     for_id[i] = i;
@@ -263,6 +267,7 @@ public class First extends AppCompatActivity {
                     for (int i = 0; i < size_form; i++) {
                         FormulasElements formula = realm.createObject(FormulasElements.class);
                         formula.setID(for_id[i]);
+
                         formula.setFormula(for_formula[i]);
                         formula.setName(for_name[i]);
                         Log.d("Done " , i + "");

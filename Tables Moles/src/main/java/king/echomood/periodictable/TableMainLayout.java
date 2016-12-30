@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +125,13 @@ public class TableMainLayout extends RelativeLayout {
         this.generateTableC_AndTable_B();
 
         this.resizeBodyTableRowHeight();
+
+        tableA.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Gooof" ,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // this is just the sample data
@@ -610,7 +618,7 @@ public class TableMainLayout extends RelativeLayout {
 
         // RelativeLayout params were very useful here
         // the addRule method is the key to arrange the components properly
-        LayoutParams componentB_Params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+        LayoutParams componentB_Params = new LayoutParams(LayoutParams.MATCH_PARENT,100);
         
         componentB_Params.addRule(RelativeLayout.RIGHT_OF, this.tableA.getId());
 
@@ -623,13 +631,14 @@ public class TableMainLayout extends RelativeLayout {
 
         // 'this' is a relative layout,
         // we extend this table layout as relative layout as seen during the creation of this class
-        this.addView(this.tableA , 250 , LayoutParams.WRAP_CONTENT);
+        this.addView(this.tableA , 250 ,100);
 
         this.addView(this.horizontalScrollViewB, componentB_Params);
         this.addView(this.scrollViewC, componentC_Params);
         this.addView(this.scrollViewD, componentD_Params);
 
     }
+
 
 
 

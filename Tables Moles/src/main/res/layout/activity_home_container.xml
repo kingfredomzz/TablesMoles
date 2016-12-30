@@ -9,10 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Your loooooong scrolling content here. -->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -21,7 +18,7 @@
 
                 </FrameLayout>
 
-        </ScrollView>
+
 
     </android.support.v4.widget.NestedScrollView>
 
