@@ -102,7 +102,7 @@ public class MolarCalculater extends Fragment {
 
                 int count = 0;
                 String form =   formela.getText().toString();
-                form.replaceAll("\\s+","");
+                form =  form.replaceAll("\\s+","");
 
                 elementCalculation.setElement_Formela(form);
                 elementCalculation.accept();
