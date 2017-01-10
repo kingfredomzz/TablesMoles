@@ -198,7 +198,7 @@ public class DetailActivity extends AppCompatActivity {
             case 7 : imag = R.drawable.nitrogen_thumb; break;
             case 8 : imag = R.drawable.oxygen_thumb; break;
             case 9 : imag = R.drawable.fluorite_thumb; break;
-            case 10 : imag = R.drawable.fluorite_thumb; break;
+            case 10 : imag = R.drawable.neon_thumb; break;
             case 11 : imag = R.drawable.sodium_thumb; break;
             case 12 : imag = R.drawable.magnesium_thumb; break;
             case 13 : imag = R.drawable.aluminium_thumb; break;

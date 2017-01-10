@@ -2,6 +2,7 @@ package king.echomood.periodictable;
 
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -89,7 +90,7 @@ public class TableMainLayout extends RelativeLayout {
 
     int headerCellsWidth[] = new int[headers.length];
 
-    public TableMainLayout(Context context , AttributeSet attributeSet) {
+    public TableMainLayout(final Context context , AttributeSet attributeSet) {
 
         super(context , attributeSet);
 
@@ -129,7 +130,10 @@ public class TableMainLayout extends RelativeLayout {
         tableA.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Gooof" ,Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getContext());
+                dialog.setTitle("Types");
+               dialog.setContentView(R.layout.typs);
+                dialog.show();
             }
         });
     }
@@ -170,32 +174,32 @@ public class TableMainLayout extends RelativeLayout {
 
 
             if (x == 0) {
-                 sampleObject = new SampleObject(
-                         columns[x],
-                         "*",
-                    "S",
-                    "S",
-                    "S",
-                    "S",
-                    "-",
-                    "S",
-                    "P",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "I",
-                    "-",
-                    "I",
-                    "I",
-                    "-",
-                    "I",
-                    "P"
-                 );
+                sampleObject = new SampleObject(
+                        columns[x],
+                        "*",
+                        "S",
+                        "S",
+                        "S",
+                        "S",
+                        "-",
+                        "S",
+                        "P",
+                        "I",
+                        "I",
+                        "I",
+                        "I",
+                        "I",
+                        "I",
+                        "I",
+                        "I",
+                        "I",
+                        "-",
+                        "I",
+                        "I",
+                        "-",
+                        "I",
+                        "P"
+                );
             }
 
             if ( x==1 ){
@@ -290,7 +294,7 @@ public class TableMainLayout extends RelativeLayout {
 
             if (x==4){
                 sampleObject = new SampleObject(
-                columns[x] ,
+                        columns[x] ,
                         "S",
                         "S",
                         "S",
@@ -597,10 +601,10 @@ public class TableMainLayout extends RelativeLayout {
 
     // set essential component IDs
     private void setComponentsId(){
-        this.tableA.setId(1);
-        this.horizontalScrollViewB.setId(2);
-        this.scrollViewC.setId(3);
-        this.scrollViewD.setId(4);
+        this.tableA.setId(View.generateViewId());
+        this.horizontalScrollViewB.setId(View.generateViewId());
+        this.scrollViewC.setId(View.generateViewId());
+        this.scrollViewD.setId(View.generateViewId());
     }
 
     // set tags for some horizontal and vertical scroll view
@@ -619,7 +623,7 @@ public class TableMainLayout extends RelativeLayout {
         // RelativeLayout params were very useful here
         // the addRule method is the key to arrange the components properly
         LayoutParams componentB_Params = new LayoutParams(LayoutParams.MATCH_PARENT,100);
-        
+
         componentB_Params.addRule(RelativeLayout.RIGHT_OF, this.tableA.getId());
 
         LayoutParams componentC_Params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
@@ -655,6 +659,8 @@ public class TableMainLayout extends RelativeLayout {
 
         TableRow componentATableRow = new TableRow(this.context);
         TextView textView = this.headerTextView(this.headers[0]);
+        textView.setText("Click me !");
+        textView.setTextColor(Color.WHITE);
         textView.setBackgroundColor(getResources().getColor(R.color.sul_heaers));
 
         componentATableRow.addView(textView);

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.opencsv.CSVReader;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
-import au.com.bytecode.opencsv.CSVReader;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -102,7 +103,6 @@ public class First extends AppCompatActivity {
         // copy data to the database
         to_DataBase();
 
-        exportDatabase();
 
     }
 

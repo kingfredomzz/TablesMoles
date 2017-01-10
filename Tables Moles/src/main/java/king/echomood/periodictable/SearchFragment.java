@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -35,12 +36,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import au.com.bytecode.opencsv.CSVReader;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import king.echomood.periodictable.data.ElementCalculation;
 import king.echomood.periodictable.data.FormulasElements;
+import king.echomood.periodictable.data.FurmolaAdapter;
+import king.echomood.periodictable.data.FurmolaProvider;
 
 /**
  * Created by yousf on 12/28/16.
@@ -51,15 +53,21 @@ public class SearchFragment extends Fragment {
     public int size_form = 1359;
     EditText text;
     private ArrayAdapter<String> adapter;
+    public FurmolaAdapter furmAdp;
     private List<String> list;
     ListView listView;
     View view;
+    String[] sympol;
+    String[] names;
+    int[] ids;
     List<String> temps;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.search, container, false);
-
+        sympol = new String[size_form];
+        names = new String[size_form];
+        ids = new int[size_form];
         return  view;
     }
 
@@ -84,13 +92,20 @@ public class SearchFragment extends Fragment {
         final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
         list = new ArrayList<>();
 
-
+        furmAdp = new FurmolaAdapter(getContext(), R.layout.formula_item);
         getData();
+        for (int t =0; t < 55;) {
+            try {
+                FurmolaProvider provider = new FurmolaProvider(ids[t], sympol[t], names[t]);
+                furmAdp.add(provider);
+                t++;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1 , list);
 
-
-        listView.setAdapter(adapter);
+       listView.setAdapter(furmAdp);
         text = (EditText) view.findViewById(R.id.searchText);
         text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -105,7 +120,6 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s);
 
             }
         });
@@ -130,8 +144,10 @@ public class SearchFragment extends Fragment {
                 List<String> temp_lest = new ArrayList<String>();
                 for (int i=0; i < formula.size() ; i ++) {
                     if ( formula.get(i).getFormula() != null) {
-                        String form = formula.get(i).getName() + " - " + formula.get(i).getFormula();
-                        form.replace("[" , " ");
+                        sympol[i] = formula.get(i).getFormula();
+                        names[i] = formula.get(i).getName();
+                        ids[i] = i;
+                        String form = formula.get(i).getFormula() +  " - " + formula.get(i).getName() ;
                         list.add(form);
                     }
                 }
@@ -139,6 +155,26 @@ public class SearchFragment extends Fragment {
 
             }
         });
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
 
