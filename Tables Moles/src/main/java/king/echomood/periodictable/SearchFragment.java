@@ -1,5 +1,6 @@
 package king.echomood.periodictable;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
@@ -55,6 +59,7 @@ public class SearchFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     public FurmolaAdapter furmAdp;
     private List<String> list;
+    private List<FurmolaProvider> lis_itm;
     ListView listView;
     View view;
     String[] sympol;
@@ -64,7 +69,7 @@ public class SearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.search, container, false);
+        view = inflater.inflate(R.layout.search, container, false);
         sympol = new String[size_form];
         names = new String[size_form];
         ids = new int[size_form];
@@ -91,6 +96,7 @@ public class SearchFragment extends Fragment {
 
         final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
         list = new ArrayList<>();
+        lis_itm = new ArrayList<>() ;
 
         furmAdp = new FurmolaAdapter(getContext(), R.layout.formula_item);
         getData();
@@ -98,6 +104,7 @@ public class SearchFragment extends Fragment {
             try {
                 FurmolaProvider provider = new FurmolaProvider(ids[t], sympol[t], names[t]);
                 furmAdp.add(provider);
+                lis_itm.add(provider);
                 t++;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -120,6 +127,18 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
+
+                Dialog d = new Dialog(getContext());
+                d.setTitle(null);
+                d.setContentView(R.layout.furmula_detail_layout);
+                d.show();
 
             }
         });

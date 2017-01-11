@@ -68,7 +68,6 @@ public class PeriodicTableFrag extends Fragment {
         int r = 0, atom = 0, i = 0, n1 = 71;
         lanth = 57;
         actin = 89;
-        Log.e("Back ", i + " , " + r + " ");
         if (child_in_Grid == 0) {
             for (r = 0; r < 10; r++) {
                 for (int c = 0; c < 18; c++) {
@@ -210,8 +209,7 @@ public class PeriodicTableFrag extends Fragment {
 
         // to click a child layout and take you to it's details
         int chiled = gridLayout.getChildCount();
-        Log.e("number in grid = ", chiled + "");
-        Log.e("i = ", i + " ");
+
         for (; z < chiled; z++) {
 
             int ch = 0;
@@ -233,8 +231,6 @@ public class PeriodicTableFrag extends Fragment {
                 public void onClick(View view) {
                     if (chose !=243 ) {
 
-                        Log.e("z = ", z + "");
-                        Log.e("choose = ", chose + " ");
                         gos(chose);
                     }
                 }
@@ -255,7 +251,6 @@ public class PeriodicTableFrag extends Fragment {
     void gos(int chos) {
         z = 0;
 
-        Log.e("when clicking z = ", z + " ");
         Intent intent = new Intent(getActivity().getBaseContext(), DetailActivity.class);
         intent.putExtra("atom", chos);
         startActivity(intent);
@@ -284,8 +279,7 @@ public class PeriodicTableFrag extends Fragment {
                         }
                         type[x] = results.get(x).getType();
                         numbers[x] = results.get(x).getId();
-                        Log.e("id = (", numbers[x] + ")");
-                        Log.e("types = (", type[x] + ")");
+
                         letters[x] = results.get(x).getSympol();
                         mole[x] = results.get(x).getAtomic_mass();
                     }
@@ -295,10 +289,7 @@ public class PeriodicTableFrag extends Fragment {
         } catch (Exception e) {
 
         }
-
     }
-
-
 
 
     int displayColor(String c) {

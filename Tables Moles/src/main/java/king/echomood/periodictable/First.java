@@ -152,7 +152,7 @@ public class First extends AppCompatActivity {
 
             // enter data to string list for each rows
 
-            for (;;) {
+            for (   ;   ;   ) {
                 next = reader.readNext();
                 if (next != null) {
                     list.add(next);
@@ -196,13 +196,10 @@ public class First extends AppCompatActivity {
                     String name = Arrays.toString(next2);
                     String[] nemeModified = name.split(",");
                     nemeModified[0].replace("]" , "");
-                    Log.d("The Formula 2 : " , nemeModified[0] );
                     for_formula[i] = nemeModified[0];
                     for_formula[i] =  for_formula[i].replaceAll("\\[+", " ");
-                    Log.d("The Name 2 : " , nemeModified[1] );
                     for_name[i] = nemeModified[1] ;
                     for_id[i] = i;
-                    Log.d(" Id " , i + " ");
                 }else {
                     break;
                 }
@@ -270,7 +267,7 @@ public class First extends AppCompatActivity {
 
                         formula.setFormula(for_formula[i]);
                         formula.setName(for_name[i]);
-                        Log.d("Done " , i + "");
+
                     }
                 }catch (Exception e ) {
                     e.printStackTrace();

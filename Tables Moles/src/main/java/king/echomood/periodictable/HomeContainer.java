@@ -1,5 +1,6 @@
 package king.echomood.periodictable;
 
+import android.app.Dialog;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,12 +30,16 @@ public class HomeContainer extends AppCompatActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_home) {
+                    getSupportActionBar().hide();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragement_cont, new PeriodicTableFrag()).commit();
                 }else if (tabId == R.id.tab_calculator) {
+                    getSupportActionBar().hide();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragement_cont, new MolarCalculater()).commit();
                 }else if (tabId == R.id.tab_soluble) {
+                    getSupportActionBar().show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragement_cont, new Sulobility()).commit();
                 }else if ( tabId == R.id.tab_search ) {
+                    getSupportActionBar().hide();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragement_cont, new SearchFragment()).commit();
                 }
             }

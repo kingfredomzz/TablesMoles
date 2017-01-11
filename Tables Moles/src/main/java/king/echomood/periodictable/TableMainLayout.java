@@ -131,7 +131,7 @@ public class TableMainLayout extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(getContext());
-                dialog.setTitle("Types");
+                dialog.setTitle(null);
                dialog.setContentView(R.layout.typs);
                 dialog.show();
             }
@@ -690,12 +690,6 @@ public class TableMainLayout extends RelativeLayout {
 
     // generate table row of table C and table D
     private void generateTableC_AndTable_B(){
-
-        // just seeing some header cell width
-        for(int x=0; x<this.headerCellsWidth.length; x++){
-            Log.v("TableMainLayout.java", this.headerCellsWidth[x]+"");
-        }
-
         for(SampleObject sampleObject : this.sampleObjects){
 
             TableRow tableRowForTableC = this.tableRowForTableC(sampleObject);

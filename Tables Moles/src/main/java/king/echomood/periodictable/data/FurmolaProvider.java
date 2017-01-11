@@ -54,7 +54,7 @@ public class FurmolaProvider {
             form = form.replace("+", "");
             form = form.replace("-", "");
             form = form.replace(".", "");
-            Log.d("cc",form);
+
             elementCalculation.setElement_Formela(form);
             elementCalculation.accept();
             this.molar = Math.round( elementCalculation.getFinal_Result());

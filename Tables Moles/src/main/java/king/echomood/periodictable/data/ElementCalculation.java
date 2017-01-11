@@ -16,7 +16,16 @@ public class ElementCalculation {
     Hashtable[] templist;
     Hashtable brentry=new Hashtable();
     double output,finaloutput;
-    int newid=0,roundopen=0,boxopen=0,fullLen=0,indexLen=0,hmrpos=0,hmcpos=0,digitvalue=0,tempindex=0,suffix=0;
+    int newid=0,
+            roundopen=0,
+            boxopen=0,
+            fullLen=0,
+            indexLen=0,
+            hmrpos=0,
+            hmcpos=0,
+            digitvalue=0,
+            tempindex=0,
+            suffix=0;
     String temp="",args="";
     private double Final_Result;
     private String Element_Formela;

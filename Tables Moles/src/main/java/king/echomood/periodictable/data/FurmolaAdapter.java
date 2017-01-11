@@ -51,9 +51,20 @@ public class FurmolaAdapter extends ArrayAdapter {
         FurmolaProvider provider ;
         provider = (FurmolaProvider) this.getItem(position);
         handler.molar.setText(provider.getMolar() + " ");
+        handler.molar.setBackground(getContext().getResources().getDrawable (R.drawable.molar_back));
+
         handler.name.setText(provider.getName());
         handler.sympol.setText(provider.getSympol());
         return row;
+    }
+
+    private int getColor (double mole){
+
+        int res = 0;
+        if (mole > 250 && mole < 500) {
+
+        }
+        return android.R.color.holo_green_dark;
     }
 
     @Override
