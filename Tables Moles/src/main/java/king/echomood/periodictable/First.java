@@ -35,7 +35,7 @@ import king.echomood.periodictable.data.FormulasElements;
 
 public class First extends AppCompatActivity {
 
-    public int size_form = 1359;
+    public int size_form = 8333;
 
     // variables for the database column
     private int[] id;
@@ -204,8 +204,6 @@ public class First extends AppCompatActivity {
                     break;
                 }
             }
-
-
 
         }catch (Exception e) {
             Log.e("Error" , e.toString());

@@ -1,7 +1,14 @@
 package king.echomood.periodictable;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,11 +16,18 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -39,7 +53,6 @@ public class PeriodicTableFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
          view = inflater.inflate(R.layout.activity_table_home , container , false);
         numbers = new int[118];
         letters = new String[118];
@@ -48,6 +61,8 @@ public class PeriodicTableFrag extends Fragment {
 
         return view;
     }
+
+
 
 
     @Override
@@ -322,7 +337,59 @@ public class PeriodicTableFrag extends Fragment {
     }
 
 
+    private void takeScreenShot()
+    {
+        final ViewGroup u = (ViewGroup) ((ViewGroup) getActivity()
+                .findViewById(android.R.id.content)).getChildAt(0);
+        ScrollView z = (ScrollView) view.findViewById(R.id.periodic_table_view);
+        int totalHeight = z.getChildAt(0).getHeight();
+        int totalWidth = z.getChildAt(0).getWidth();
 
+        Bitmap b = getBitmapFromView(u,totalHeight,totalWidth);
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss a" , now);
+        File file = saveBitmap(b, now + ".png");
+        Uri uri = Uri.fromFile(new File(file.getAbsolutePath()));
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Details of  )");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("image/*");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, "share via"));
+
+    }
+
+    public Bitmap getBitmapFromView(View view, int totalHeight, int totalWidth) {
+
+        Bitmap returnedBitmap = Bitmap.createBitmap(totalWidth,totalHeight , Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return returnedBitmap;
+    }
+
+
+    private static File saveBitmap(Bitmap bm, String fileName){
+        final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Screenshots";
+        File dir = new File(path);
+        if(!dir.exists())
+            dir.mkdirs();
+        File file = new File(dir, fileName);
+        try {
+            FileOutputStream fOut = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.PNG, 90, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 
 
     @Override

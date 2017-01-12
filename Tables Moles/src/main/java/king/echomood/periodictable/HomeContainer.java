@@ -25,7 +25,7 @@ public class HomeContainer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_container);
         BottomBar bar = (BottomBar) findViewById(R.id.bottomBar);
-        getSupportActionBar().hide();
+        getSupportActionBar().show();
         bar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -44,9 +44,5 @@ public class HomeContainer extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-
 }

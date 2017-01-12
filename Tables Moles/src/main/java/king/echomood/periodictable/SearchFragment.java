@@ -54,7 +54,7 @@ import king.echomood.periodictable.data.FurmolaProvider;
 
 public class SearchFragment extends Fragment {
 
-    public int size_form = 1359;
+    public int size_form = 8333;
     EditText text;
     private ArrayAdapter<String> adapter;
     public FurmolaAdapter furmAdp;
@@ -94,13 +94,15 @@ public class SearchFragment extends Fragment {
         super.onResume();
 
 
+
         final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
         list = new ArrayList<>();
         lis_itm = new ArrayList<>() ;
 
         furmAdp = new FurmolaAdapter(getContext(), R.layout.formula_item);
+
         getData();
-        for (int t =0; t < 55;) {
+        for (int t =0; t < 1111;) {
             try {
                 FurmolaProvider provider = new FurmolaProvider(ids[t], sympol[t], names[t]);
                 furmAdp.add(provider);
@@ -112,7 +114,7 @@ public class SearchFragment extends Fragment {
         }
 
 
-       listView.setAdapter(furmAdp);
+        listView.setAdapter(furmAdp);
         text = (EditText) view.findViewById(R.id.searchText);
         text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -127,7 +129,8 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                furmAdp.getFilter().filter(s);
+                furmAdp.notifyDataSetChanged();
             }
         });
 
@@ -192,6 +195,7 @@ public class SearchFragment extends Fragment {
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        Log.d("ggg" , totalHeight + " ");
         listView.setLayoutParams(params);
         listView.requestLayout();
     }

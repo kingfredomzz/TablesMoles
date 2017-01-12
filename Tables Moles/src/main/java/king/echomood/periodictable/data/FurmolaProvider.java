@@ -12,7 +12,6 @@ public class FurmolaProvider {
         this.setId(id);
         this.setName(name);
         this.setSympol(sym);
-        this.setMolar(this.getSympol());
     }
 
     public int getId() {
@@ -40,7 +39,7 @@ public class FurmolaProvider {
     }
 
     public double getMolar() {
-        return molar;
+        return 0.0;
     }
 
     public void setMolar(String molar) {

@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Handler;
 
 import king.echomood.periodictable.R;
@@ -19,9 +22,10 @@ import king.echomood.periodictable.R;
  * Created by Yosuf on 07/01/2017.
  */
 
-public class FurmolaAdapter extends ArrayAdapter {
+public class FurmolaAdapter extends ArrayAdapter implements Filterable {
 
-    List list = new ArrayList();
+    List list = new ArrayList<FurmolaAdapter>();
+    List disp_ls = new ArrayList<FurmolaAdapter>();
     public FurmolaAdapter(Context context, int resource) {
         super(context, resource);
     }
@@ -71,6 +75,7 @@ public class FurmolaAdapter extends ArrayAdapter {
     public void add(Object object) {
         super.add(object);
         list.add(object);
+        disp_ls.add(object);
     }
 
     static class DataHandler {
@@ -89,4 +94,64 @@ public class FurmolaAdapter extends ArrayAdapter {
     public Object getItem(int position) {
         return this.list.get(position);
     }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                List filtList = new ArrayList<>();
+                if (list == null) {
+                    list = new ArrayList(disp_ls);
+                }
+
+
+                if (constraint == null || constraint.length() == 0) {
+
+                    // set the Original result to return
+                    results.count = disp_ls.size();
+                    results.values = disp_ls;
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    for(int i=0; i < disp_ls.size() ; i++) {
+                        FurmolaProvider data = (FurmolaProvider) disp_ls.get(i);
+                        String da = data.getSympol() + " " + data.getName() ;
+                        if (da.toLowerCase().contains(constraint)) {
+                            filtList.add(disp_ls.get(i));
+                        }
+                    }
+
+                    results.count = filtList.size();
+                    results.values = filtList;
+                }
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                list = (List) results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return super.getFilter();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

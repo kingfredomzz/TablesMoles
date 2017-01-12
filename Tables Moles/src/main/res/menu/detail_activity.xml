@@ -6,4 +6,12 @@
         android:orderInCategory="100"
         android:title="W"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/det_share"
+        android:orderInCategory="100"
+        android:title="W"
+        android:icon="@drawable/ic_menu_share"
+        app:showAsAction="always"/>
+
 </menu>

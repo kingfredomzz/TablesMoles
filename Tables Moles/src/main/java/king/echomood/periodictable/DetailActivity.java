@@ -1,18 +1,35 @@
 package king.echomood.periodictable;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -23,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
 
     Realm realm;
     int x = 0;
-
+    private Context mContext;
     int id  = 0;
     String sympol = "";
     String name= "";
@@ -71,6 +88,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getApplicationContext();
         setContentView(R.layout.activity_detail);
 
         x = 0;
@@ -325,9 +343,67 @@ public class DetailActivity extends AppCompatActivity {
 
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/" + name));
             startActivity(intent);
+        }else if (id == R.id.det_share) {
+            takeScreenShot();
         }
 
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void takeScreenShot()
+    {
+        final ViewGroup u = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        ScrollView z = (ScrollView) findViewById(R.id.detail_activity);
+        int totalHeight = z.getChildAt(0).getHeight();
+        int totalWidth = z.getChildAt(0).getWidth();
+
+        Bitmap b = getBitmapFromView(u,totalHeight,totalWidth);
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss a" , now);
+        File file = saveBitmap(b, now + ".png");
+        Uri uri = Uri.fromFile(new File(file.getAbsolutePath()));
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Details of " + name + " ( " + sympol + " )");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("image/*");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, "share via"));
+
+    }
+
+    public Bitmap getBitmapFromView(View view, int totalHeight, int totalWidth) {
+
+        Bitmap returnedBitmap = Bitmap.createBitmap(totalWidth,totalHeight , Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return returnedBitmap;
+    }
+
+
+    private static File saveBitmap(Bitmap bm, String fileName){
+        final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Screenshots";
+        File dir = new File(path);
+        if(!dir.exists())
+            dir.mkdirs();
+        File file = new File(dir, fileName);
+        try {
+            FileOutputStream fOut = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.PNG, 90, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
 }

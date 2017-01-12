@@ -659,7 +659,6 @@ public class TableMainLayout extends RelativeLayout {
 
         TableRow componentATableRow = new TableRow(this.context);
         TextView textView = this.headerTextView(this.headers[0]);
-        textView.setText("Click me !");
         textView.setTextColor(Color.WHITE);
         textView.setBackgroundColor(getResources().getColor(R.color.sul_heaers));
 

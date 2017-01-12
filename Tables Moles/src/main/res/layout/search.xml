@@ -24,7 +24,7 @@
             <ListView
                 android:id="@+id/listSuggest"
                 android:layout_width="match_parent"
-                android:layout_height="1431dp"/>
+                android:layout_height="96657dp"/>
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>
