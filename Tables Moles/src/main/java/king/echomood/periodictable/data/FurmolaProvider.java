@@ -8,6 +8,12 @@ import android.util.Log;
 
 public class FurmolaProvider {
 
+    private int id;
+    private String sympol;
+    private String name;
+    private double molar;
+
+
     public FurmolaProvider(int id, String sym, String name) {
         this.setId(id);
         this.setName(name);
@@ -65,10 +71,6 @@ public class FurmolaProvider {
         }
     }
 
-    private int id;
-    private String sympol;
-    private String name;
-    private double molar;
 
 
 

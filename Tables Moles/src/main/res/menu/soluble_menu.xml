@@ -8,10 +8,5 @@
         android:icon="@drawable/sort"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/soluble_share"
-        android:orderInCategory="200"
-        android:title="share"
-        android:icon="@drawable/share"
-        app:showAsAction="always"/>
+
 </menu>

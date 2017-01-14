@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.opencsv.CSVReader;
 
@@ -185,7 +186,7 @@ public class First extends AppCompatActivity {
 
 
             // get whole data
-            CSVReader reader1 = new CSVReader(new InputStreamReader(getResources().getAssets().open("test.csv")));
+            CSVReader reader1 = new CSVReader(new InputStreamReader(getResources().getAssets().open("furmulas.csv")));
 
             // enter data to string list for each rows
             String[] next2 ;
@@ -265,7 +266,6 @@ public class First extends AppCompatActivity {
 
                         formula.setFormula(for_formula[i]);
                         formula.setName(for_name[i]);
-
                     }
                 }catch (Exception e ) {
                     e.printStackTrace();

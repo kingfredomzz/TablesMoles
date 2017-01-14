@@ -1,6 +1,9 @@
 package king.echomood.periodictable;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -97,24 +100,12 @@ public class SearchFragment extends Fragment {
 
         final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
         list = new ArrayList<>();
-        lis_itm = new ArrayList<>() ;
 
-        furmAdp = new FurmolaAdapter(getContext(), R.layout.formula_item);
+
 
         getData();
-        for (int t =0; t < 1111;) {
-            try {
-                FurmolaProvider provider = new FurmolaProvider(ids[t], sympol[t], names[t]);
-                furmAdp.add(provider);
-                lis_itm.add(provider);
-                t++;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        listView.setAdapter(furmAdp);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1 , list);
+        listView.setAdapter(adapter);
         text = (EditText) view.findViewById(R.id.searchText);
         text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,8 +120,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                furmAdp.getFilter().filter(s);
-                furmAdp.notifyDataSetChanged();
+                adapter.getFilter().filter(s);
             }
         });
 
@@ -138,11 +128,10 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
 
-                Dialog d = new Dialog(getContext());
-                d.setTitle(null);
-                d.setContentView(R.layout.furmula_detail_layout);
-                d.show();
-
+                ClipboardManager cl = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData data = ClipData.newPlainText("element" , list.get(position).toString() );
+                cl.setPrimaryClip(data);
+                Toast.makeText(getContext(), "Done Copying" , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -164,16 +153,14 @@ public class SearchFragment extends Fragment {
             public void execute(Realm realm) {
                 RealmResults<FormulasElements> formula = realm.where(FormulasElements.class).findAll();
                 List<String> temp_lest = new ArrayList<String>();
-                for (int i=0; i < formula.size() ; i ++) {
+                for (int i=0; i < size_form ; i ++) {
                     if ( formula.get(i).getFormula() != null) {
-                        sympol[i] = formula.get(i).getFormula();
-                        names[i] = formula.get(i).getName();
-                        ids[i] = i;
                         String form = formula.get(i).getFormula() +  " - " + formula.get(i).getName() ;
                         list.add(form);
                     }
                 }
 
+                Toast.makeText(getContext(), "Size " + list.size(), Toast.LENGTH_SHORT).show();
 
             }
         });

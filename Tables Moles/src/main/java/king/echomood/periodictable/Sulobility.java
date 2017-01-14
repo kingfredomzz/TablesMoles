@@ -45,8 +45,6 @@ public class Sulobility extends Fragment {
             dialog.setTitle("FF");
             dialog.setContentView(R.layout.typs);
             dialog.show();
-        }else if (item.getItemId() == R.id.soluble_share) {
-            takeScreenShot();
         }
 
         getActivity().getWindow().getDecorView().getRootView();

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,6 +91,10 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         setContentView(R.layout.activity_detail);
+
+
+        setClickListenerForDefs();
+
 
         x = 0;
          int ids = 0;
@@ -406,4 +411,273 @@ public class DetailActivity extends AppCompatActivity {
         return file;
     }
 
+    public void setClickListenerForDefs(){
+        TextView test = (TextView) findViewById(R.id.test_click);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, "اسم العنصر", Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/List_of_chemical_elements" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+        TextView molar_mass = (TextView) findViewById(R.id.atomic_mass_def);
+        molar_mass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.atomic_mass_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Relative_atomic_mass" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+        TextView atomic_num = (TextView) findViewById(R.id.atome_numbers_def);
+        atomic_num.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.atomic_number_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Atomic_number" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+        TextView stander = (TextView) findViewById(R.id.stander_def);
+        stander.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.Standered_State_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Standard_state" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+        TextView dens = (TextView) findViewById(R.id.dens_def);
+        dens.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.density_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Density" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+        TextView melt_p = (TextView) findViewById(R.id.melt_def);
+        melt_p.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.melting_point_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Melting_point" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+        TextView boild_p = (TextView) findViewById(R.id.boil_def);
+        boild_p.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.boiling_point_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/boiling_point" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+        TextView atomi_rad = (TextView) findViewById(R.id.atmoic_rad_def);
+        atomi_rad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.atomic_raduis_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Atomic_radius" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+        TextView ion_rad = (TextView) findViewById(R.id.ion_raduis);
+        ion_rad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.ion_raduis_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/ionic_radius" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+        TextView oxid = (TextView) findViewById(R.id.oxidation_def);
+        oxid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.oxidation_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/oxidation_state" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+        TextView bonding = (TextView) findViewById(R.id.bonding_type_def);
+        bonding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.bonding_type_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Chemical_bond" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+        TextView elect_conf = (TextView) findViewById(R.id.elect_conf_def);
+        elect_conf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.electronic_conf_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Electron_configuration" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+
+        TextView pauling = (TextView) findViewById(R.id.electr_pauling_def);
+        pauling.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.pauling_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+
+
+        TextView ions_eng = (TextView) findViewById(R.id.ion_def);
+        ions_eng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.ionizations_eng_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Ionization_energy" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+        TextView acti_eng = (TextView) findViewById(R.id.activation_def);
+        acti_eng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final  Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.activation_eng_def), Snackbar.LENGTH_LONG);
+
+                snackbar.setAction(getResources().getString(R.string.wiki), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/activation_energy" ));
+                        startActivity(intent);
+                    }
+                });
+                snackbar.show();
+            }
+        });
+
+
+    }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atomic_mass">الكتلة الذرية</string>
+    <string name="atomic_number">العدد الذري</string>
+    <string name="atomic_raduis">نصف قطر النواة</string>
+    <string name="boiling_point">درجة الغليان</string>
+    <string name="bonding_type">نوع الرابطة</string>
+    <string name="density">الكثافة  جرام/ميلي لتر</string>
+    <string name="general_info">معلومات عامة</string>
+    <string name="ion_raduis">نصف قطر الأيون</string>
+    <string name="melting_point">درجة الذوبان</string>
+    <string name="name">الاسم</string>
+    <string name="oxidation_state">حالة التأكسد</string>
+    <string name="properties">الخصائص</string>
+    <string name="type">النوع</string>
+    <string name="years_discover">سنة الاكتشاف</string>
+    <string name="Activation_Energy">طاقة التنشيط</string>
+    <string name="Electromagnetic_Properties">الخصائص الالكترونية</string>
+    <string name="Ionization_energy">طاقة التأيين</string>
+    <string name="Pauling_electronegativity">مقياس باولينج</string>
+    <string name="electronic_configuration">التوزيع الإلكتروني</string>
+    <string name="Standered_State">الحالة الطبيعية</string>
+    <string name="atomic_mass_def">مجموع النيتورونات والبروتونات في النواة</string>
+    <string name="density_def">هي كم  جرام موحود في ملي لتر</string>
+    <string name="melting_point_def">درجة الحرارة اللازمة لتغيي المادةر من صلب إلى سائل</string>
+    <string name="boiling_point_def">درجة الحرارة اللازمة لتحويل سائل إلى غاز</string>
+    <string name="bonding_type_def">"نوع الرابطة المتكونة بين الذرات من نفس النوع (ايونية٫ تساهمية) "</string>
+    <string name="atomic_raduis_def">عبارة عن نصف قطر الذرة في حالة الاستقرار</string>
+    <string name="ion_raduis_def">عبارة عن نصف قطر الذرة عندما يكون آيون</string>
+    <string name="electronic_conf_def"></string>
+    <string name="electromagnifity_def">" "</string>
+    <string name="ionizations_eng_def">الطاقة اللازمة لنزع إلكترون</string>
+    <string name="activation_eng_def">الطاقة اللازمة لبدأ التفاعل الكيميائي</string>
+    <string name="wiki">ويكي</string>
+    <string name="atomic_number_def">ليمثل عدد البروتونات الموجودة في نواة الذرة</string>
+    <string name="Standered_State_def">حالة العنصر في الظروف الطبيعية</string>
+</resources>

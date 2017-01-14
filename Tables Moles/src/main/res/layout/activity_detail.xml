@@ -101,11 +101,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="General Information"
+                    android:text="@string/general_info"
                     android:textSize="20dp"
                     android:textColor="#f9f9f9"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -116,13 +117,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name:"
+                    android:text="@string/name"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="3dp" />
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/test_click"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -137,10 +139,10 @@
                     android:layout_marginRight="40dp" />
 
                 <TextView
-                    android:text="Atomic number"
+                    android:text="@string/atomic_number"
                     android:layout_height="28dp"
                     android:layout_width="match_parent"
-                    android:id="@+id/atome_numbers"
+                    android:id="@+id/atome_numbers_def"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
@@ -161,12 +163,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Type :"
-
+                    android:text="@string/type"
+                    android:layout_marginRight="30dp
+                    "
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="3dp" />
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/type_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -186,8 +190,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Year dicovered"
-
+                    android:text="@string/years_discover"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
@@ -205,12 +209,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Standered State :"
-
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="3dp" />
+                    android:layout_marginTop="3dp"
+                    android:text="@string/Standered_State"
+                    android:id="@+id/stander_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -245,11 +250,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Properties"
+                    android:text="@string/properties"
                     android:textSize="20dp"
                     android:textColor="#f9f9f9"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -260,13 +266,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="atomic mass:"
+                    android:text="@string/atomic_mass"
                     android:layout_marginTop="2dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:textColor="#f9f9f9"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:id="@+id/atomic_mass_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -284,12 +291,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Density :"
-
+                    android:text="@string/density"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/dens_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -306,12 +314,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Melting Point :"
-
+                    android:text="@string/melting_point"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/melt_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -321,6 +330,7 @@
                     android:background="@drawable/borders"
                     android:text=" "
                     android:id="@+id/melting_point"
+
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
                     android:textSize="17dp"
@@ -328,12 +338,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Boiling Point :"
-
+                    android:text="@string/boiling_point"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/boil_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -350,12 +361,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" atom raduis in pm :"
-
+                    android:text="@string/atomic_raduis"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/atmoic_rad_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -372,12 +384,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" ion raduis in pm :"
-
+                    android:text="@string/ion_raduis"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/ios_raduis_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -395,12 +408,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" bonding Type :"
-
+                    android:text="@string/bonding_type"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/bonding_type_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -418,12 +432,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" Oxidation States :"
-
+                    android:text="@string/oxidation_state"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/oxidation_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -466,8 +481,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Electromagnetic Properties"
+                    android:text="@string/Electromagnetic_Properties"
                     android:textSize="20dp"
+                    android:layout_marginRight="10dp"
                     android:textColor="#f9f9f9"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp" />
@@ -481,13 +497,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="electronic configuration:"
+                    android:text="@string/electronic_configuration"
                     android:layout_marginTop="2dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:textColor="#f9f9f9"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:id="@+id/elect_conf_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -497,6 +514,7 @@
                     android:background="@drawable/borders"
                     android:text=" "
                     android:id="@+id/elec_confi"
+
                     android:layout_marginLeft="40dp"
                     android:textColor="#f9f9f9"
                     android:textSize="17dp"
@@ -505,12 +523,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="electronegativity in Pauling :"
-
+                    android:text="@string/Pauling_electronegativity"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/electr_pauling_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -527,12 +546,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ionization Energy in kJ/mol :"
-
+                    android:text="@string/Ionization_energy"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/ion_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -549,12 +569,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Activation Energy :"
-
+                    android:text="@string/Activation_Energy"
+                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:textColor="#f9f9f9"
                     android:textSize="18dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/activation_def"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -568,11 +589,6 @@
                     android:textColor="#f9f9f9"
                     android:textSize="17dp"
                     android:layout_marginTop="2dp" />
-
-
-
-
-
 
             </LinearLayout>
         </LinearLayout>

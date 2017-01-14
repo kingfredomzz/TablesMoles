@@ -24,8 +24,8 @@ import king.echomood.periodictable.R;
 
 public class FurmolaAdapter extends ArrayAdapter implements Filterable {
 
-    List list = new ArrayList<FurmolaAdapter>();
-    List disp_ls = new ArrayList<FurmolaAdapter>();
+    List list = new ArrayList<>();
+    List disp_ls = new ArrayList<>();
     public FurmolaAdapter(Context context, int resource) {
         super(context, resource);
     }
@@ -118,8 +118,9 @@ public class FurmolaAdapter extends ArrayAdapter implements Filterable {
                     constraint = constraint.toString().toLowerCase();
                     for(int i=0; i < disp_ls.size() ; i++) {
                         FurmolaProvider data = (FurmolaProvider) disp_ls.get(i);
-                        String da = data.getSympol() + " " + data.getName() ;
-                        if (da.toLowerCase().contains(constraint)) {
+                        String da = data.getSympol() ;
+                        String d2 = data.getName();
+                        if (da.toLowerCase().startsWith(constraint.toString())) {
                             filtList.add(disp_ls.get(i));
                         }
                     }
@@ -137,7 +138,7 @@ public class FurmolaAdapter extends ArrayAdapter implements Filterable {
                 notifyDataSetChanged();
             }
         };
-        return super.getFilter();
+        return filter;
     }
 }
 
