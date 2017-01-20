@@ -96,6 +96,8 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity().getBaseContext()).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
 
         final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
@@ -120,6 +122,29 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                final String search = s.toString();
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmResults<FormulasElements> results = realm.where(FormulasElements.class)
+                                .beginGroup()
+                                .contains("formula" , search)
+                                .or()
+                                .contains("name", search)
+                                .endGroup()
+                                .findAll();
+                        List<String> list1 = new ArrayList<>();
+                        for (int i=0; i < 100 && i < results.size(); i++) {
+                            String item =results.get(i).getFormula() + " - " + results.get(i).getName();
+                            list1.add(item);
+                        }
+
+                        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list1);
+                        listView.setAdapter(adapter);
+
+                    }
+                });
                 adapter.getFilter().filter(s);
             }
         });
@@ -139,12 +164,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void getData (){
-        // initial var for data
-        String[] next  ;
-        List<String[]> main = new ArrayList<String[]>() ;
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity().getBaseContext()).build();
-        Realm.setDefaultConfiguration(realmConfiguration);
 
         Realm realm = Realm.getDefaultInstance();
 
@@ -152,15 +172,13 @@ public class SearchFragment extends Fragment {
             @Override
             public void execute(Realm realm) {
                 RealmResults<FormulasElements> formula = realm.where(FormulasElements.class).findAll();
-                List<String> temp_lest = new ArrayList<String>();
-                for (int i=0; i < size_form ; i ++) {
+                for (int i=0; i < 100 ; i ++) {
                     if ( formula.get(i).getFormula() != null) {
                         String form = formula.get(i).getFormula() +  " - " + formula.get(i).getName() ;
                         list.add(form);
                     }
                 }
 
-                Toast.makeText(getContext(), "Size " + list.size(), Toast.LENGTH_SHORT).show();
 
             }
         });

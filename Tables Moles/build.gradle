@@ -26,5 +26,4 @@ dependencies {
     compile 'com.roughike:bottom-bar:2.0.2'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 
-
 }

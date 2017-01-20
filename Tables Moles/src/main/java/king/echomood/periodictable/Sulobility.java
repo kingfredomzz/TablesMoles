@@ -15,6 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,6 +40,7 @@ public class Sulobility extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.soluble_menu, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -42,7 +48,7 @@ public class Sulobility extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.soluble_sort) {
             Dialog dialog = new Dialog(getContext());
-            dialog.setTitle("FF");
+            dialog.setTitle(null);
             dialog.setContentView(R.layout.typs);
             dialog.show();
         }

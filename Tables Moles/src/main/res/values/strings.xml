@@ -16,10 +16,10 @@
  -->
 <resources>
     <string name="app_name" translatable="false">Tabels Moles</string>
-    <string name="title_activity_table_home">TableHome</string>
+    <string name="title_activity_table_home" translatable="false">TableHome</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings" translatable="false">Settings</string>
     <string name="general_info">general info</string>
@@ -52,7 +52,7 @@
     <string name="electronic_conf_def">is the representation of the arrangement of electrons distributed among the orbital shells and subshells</string>
     <string name="electromagnifity_def">the ability of an atom in a molecule to draw bonding electrons to itself</string>
     <string name="ionizations_eng_def">the energy required to remove an electron from a neutral atom</string>
-    <string name="activation_eng_def">the energy required to remove an electron from a neutral atom</string>
+    <string name="activation_eng_def">the energy required to start the chemical reaction</string>
     <string name="wiki">wiki</string>
     <string name="atomic_number_def">") is the number of protons found in the nucleus of an atom "</string>
     <string name="Standered_State_def">the state of elements in 25 C and 1 atm pressure</string>

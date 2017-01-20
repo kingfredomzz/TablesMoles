@@ -2,11 +2,13 @@ package king.echomood.periodictable.data;
 
 import android.util.Log;
 
+import io.realm.RealmModel;
+
 /**
  * Created by Yosuf on 07/01/2017.
  */
 
-public class FurmolaProvider {
+public class FurmolaProvider implements RealmModel {
 
     private int id;
     private String sympol;
