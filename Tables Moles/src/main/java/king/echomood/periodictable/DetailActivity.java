@@ -1,6 +1,7 @@
 package king.echomood.periodictable;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,6 +32,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -86,12 +89,13 @@ public class DetailActivity extends AppCompatActivity {
     TextView text_ionation_energy;
     TextView text_Activation_Energy;
 
+    private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         setContentView(R.layout.activity_detail);
-
 
         setClickListenerForDefs();
 
@@ -349,6 +353,7 @@ public class DetailActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/" + name));
             startActivity(intent);
         }else if (id == R.id.det_share) {
+
             takeScreenShot();
         }
 

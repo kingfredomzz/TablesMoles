@@ -141,18 +141,3 @@ public class FurmolaAdapter extends ArrayAdapter implements Filterable {
         return filter;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

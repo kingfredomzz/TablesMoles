@@ -1,6 +1,7 @@
 package king.echomood.periodictable;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -26,6 +27,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.roughike.bottombar.BottomBar;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,10 +49,13 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import king.echomood.periodictable.data.ElementCalculation;
 import king.echomood.periodictable.data.FormulasElements;
 import king.echomood.periodictable.data.FurmolaAdapter;
 import king.echomood.periodictable.data.FurmolaProvider;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by yousf on 12/28/16.
@@ -58,17 +64,15 @@ import king.echomood.periodictable.data.FurmolaProvider;
 public class SearchFragment extends Fragment {
 
     public int size_form = 8333;
+    private ProgressDialog dialog;
     EditText text;
     private ArrayAdapter<String> adapter;
-    public FurmolaAdapter furmAdp;
     private List<String> list;
-    private List<FurmolaProvider> lis_itm;
-    ListView listView;
     View view;
     String[] sympol;
     String[] names;
     int[] ids;
-    List<String> temps;
+    BottomBar bar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,26 +80,19 @@ public class SearchFragment extends Fragment {
         sympol = new String[size_form];
         names = new String[size_form];
         ids = new int[size_form];
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Searching .... ");
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(false);
+        dialog.show();
+
         return  view;
     }
-
-    //Comparator for Descending Order
-    public static Comparator<String> sort_list = new Comparator<String>() {
-
-        public int compare(String o1, String o2) {
-
-            if (o1.length()!=o2.length()) {
-                return o1.length()-o2.length(); //overflow impossible since lengths are non-negative
-            }
-            return o1.compareTo(o2);
-        }
-    };
-
 
     @Override
     public void onResume() {
         super.onResume();
-
+        bar = (BottomBar) view.findViewById(R.id.bottomBar);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity().getBaseContext()).build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
@@ -103,12 +100,11 @@ public class SearchFragment extends Fragment {
         final ListView listView = (ListView) view.findViewById(R.id.listSuggest);
         list = new ArrayList<>();
 
-
-
         getData();
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1 , list);
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1 , list);
         listView.setAdapter(adapter);
         text = (EditText) view.findViewById(R.id.searchText);
+        dialog.dismiss();
         text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,25 +115,42 @@ public class SearchFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
-
             @Override
             public void afterTextChanged(Editable s) {
+
                 final String search = s.toString();
                 Realm realm = Realm.getDefaultInstance();
+
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        RealmResults<FormulasElements> results = realm.where(FormulasElements.class)
-                                .beginGroup()
-                                .contains("formula" , search)
-                                .or()
-                                .contains("name", search)
-                                .endGroup()
-                                .findAll();
+                        RealmResults<FormulasElements> results = realm.where(FormulasElements.class).findAll();
                         List<String> list1 = new ArrayList<>();
-                        for (int i=0; i < 100 && i < results.size(); i++) {
+                        for (int i=0;i < results.size(); i++) {
                             String item =results.get(i).getFormula() + " - " + results.get(i).getName();
-                            list1.add(item);
+                            if (item.startsWith(search)) {
+                                Log.d(TAG, "execute: " + search);
+                                list1.add(item);
+                            }else {
+                                final String[] words = item.split(" ");
+                                for (String word : words) {
+                                    if (word.startsWith(search)) {
+                                        list1.add(item);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        String item = " ";
+
+                        if (list1.size() == 0) {
+                            results = realm.where(FormulasElements.class).beginGroup().contains("formula" ,search).or().contains("name" , search).endGroup().findAll();
+                            for (int i =0; i < results.size(); i++) {
+                                 item =results.get(i).getFormula() + " - " + results.get(i).getName();
+                                if (item.contains(search)) {
+                                    list1.add(item);
+                                }
+                            }
                         }
 
                         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list1);
@@ -145,7 +158,6 @@ public class SearchFragment extends Fragment {
 
                     }
                 });
-                adapter.getFilter().filter(s);
             }
         });
 
