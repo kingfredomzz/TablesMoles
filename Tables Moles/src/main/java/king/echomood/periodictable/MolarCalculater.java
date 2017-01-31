@@ -110,7 +110,7 @@ public class MolarCalculater extends Fragment {
             public void onClick(View v) {
                 ElementCalculation elementCalculation = new ElementCalculation();
 
-                int count = 0;
+
                 form  =   formela.getText().toString();
                 form =  form.replaceAll("\\s+","");
 
@@ -119,10 +119,10 @@ public class MolarCalculater extends Fragment {
                 results.setText(Double.toString(elementCalculation.getFinal_Result()) + " g/m" );
 
                 InputMethodManager inputManager = (InputMethodManager)  getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-
+                if (inputManager.isAcceptingText()) {
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
         });
     }

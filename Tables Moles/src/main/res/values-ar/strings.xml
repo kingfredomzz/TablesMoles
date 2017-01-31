@@ -34,6 +34,6 @@
     <string name="atomic_number_def">ليمثل عدد البروتونات الموجودة في نواة الذرة</string>
     <string name="Standered_State_def">حالة العنصر في الظروف الطبيعية</string>
     <string name="Activation_Energy">طاقة التنشيط</string>
-    <string name="pauling_def" translatable="false">قدرة العنصر على جذب الإلكترونات</string>
-    <string name="oxidation_def" translatable="false">عدد التأكسد هو عدد الإلكترونات المفقوردة أو المكتسبة لذرة عنصر ما</string>
+    <string name="pauling_def" >قدرة العنصر على جذب الإلكترونات</string>
+    <string name="oxidation_def" >عدد التأكسد هو عدد الإلكترونات المفقوردة أو المكتسبة لذرة عنصر ما</string>
 </resources>
